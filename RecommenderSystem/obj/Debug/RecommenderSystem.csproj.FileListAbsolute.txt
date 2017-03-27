@@ -1,0 +1,12 @@
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\RecommenderSystem.exe.config
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\RecommenderSystem.exe
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\RecommenderSystem.pdb
+D:\GitHub\SWa322-Program\RecommenderSystem\obj\Debug\RecommenderSystem.csprojResolveAssemblyReference.cache
+D:\GitHub\SWa322-Program\RecommenderSystem\obj\Debug\RecommenderSystem.exe
+D:\GitHub\SWa322-Program\RecommenderSystem\obj\Debug\RecommenderSystem.pdb
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\EntityFramework.dll
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\EntityFramework.SqlServer.dll
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\MySql.Data.dll
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\MySql.Data.Entity.EF6.dll
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\EntityFramework.xml
+D:\GitHub\SWa322-Program\RecommenderSystem\bin\Debug\EntityFramework.SqlServer.xml
