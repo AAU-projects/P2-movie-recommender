@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace RecommenderSystem
 {
@@ -11,23 +12,13 @@ namespace RecommenderSystem
     {
         static void Main(string[] args)
         {
-            MySql.Data.MySqlClient.MySqlConnection conn;
-            string myConnectionString = "server=127.0.0.1;uid=program;pwd=123;database=recommender_system;";
-
-            try
-            {
-                conn = new MySql.Data.MySqlClient.MySqlConnection {ConnectionString = myConnectionString};
-                conn.Open();
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            Menu menu = new Menu("Recommender System : Login", new Login());
+            Menu menu = new Menu("Recommender System : Start", new Login(), new Register());
             Console.Beep();
 
             menu.Start();
         }
+
+        
+
     }
 }

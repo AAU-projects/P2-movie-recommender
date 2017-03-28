@@ -55,7 +55,7 @@ namespace RecommenderSystem
         {
             Console.Clear();
             Console.Title = this.Title;
-            CenterText($"[[ {this.Title} ]]");
+            CenterText($"- {this.Title} -");
 
             foreach (MenuItemBase item in _menuItems)
             {
