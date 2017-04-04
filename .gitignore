@@ -1,0 +1,8 @@
+
+*.userprefs
+.vs
+*.cache
+RecommenderSystem/bin/Debug
+RecommenderSystem\bin\Debug
+RecommenderSystem\obj\Debug
+RecommenderSystem/obj/Debug
