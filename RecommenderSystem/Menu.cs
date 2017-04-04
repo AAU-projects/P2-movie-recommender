@@ -119,7 +119,7 @@ namespace RecommenderSystem
         private static void CenterText(string text)
         {
             Console.ResetColor();
-            Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
+            //Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
             Console.WriteLine(text);
             Console.ForegroundColor = ConsoleColor.Black;
         }
