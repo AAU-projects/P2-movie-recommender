@@ -40,6 +40,39 @@ namespace RecommenderSystem
             }
         }
 
+        public static bool UserExist(string userName)
+        {
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "SELECT  count(*) FROM users WHERE Username = @username";
+                cmd.Parameters.AddWithValue("@username", userName);
+                cmd.Connection = conn;
+
+                MySqlDataReader myReader = cmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                }
+
+                if (Convert.ToInt32(myReader[0]) == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public static bool FindUser(string userName, string password)
         {
             try

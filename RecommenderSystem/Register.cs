@@ -15,23 +15,38 @@ namespace RecommenderSystem
 
         public override void Select()
         {
-            Console.Clear();
-            Console.Write("Firstname: ");
-            string firstName = Console.ReadLine();
-            Console.Write("Lastname: ");
-            string lastName = Console.ReadLine();
-            Console.Write("Username: ");
-            string userName = Console.ReadLine();
-            Console.Write("Password: ");
-            string password = Console.ReadLine();
-            Console.WriteLine();
+            bool success = false;
+            do
+            {
+                Console.Clear();
+                Console.Write("Firstname: ");
+                string firstName = Console.ReadLine();
+                Console.Write("Lastname: ");
+                string lastName = Console.ReadLine();
+                Console.Write("Username: ");
+                string userName = Console.ReadLine();
+                Console.Write("Password: ");
+                string password = Console.ReadLine();
+                Console.WriteLine();
 
-            bool success = MySqlCommands.CreateNewUser(firstName, lastName, userName, password);
+                if (MySqlCommands.UserExist(userName))
+                {
+                    Console.WriteLine("Username is already taken!");
+                }
+                else
+                {
+                    success = MySqlCommands.CreateNewUser(firstName, lastName, userName, password);
+                    if (success)
+                    {
+                        Console.WriteLine("User was successfully created");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to create user");
+                    }
+                }
 
-            if (success)
-                Console.WriteLine("Success!!!!!!!!");
-            else
-                Console.WriteLine("Failed!!!");
+            } while (!success);
 
             Console.ReadLine();
         }
