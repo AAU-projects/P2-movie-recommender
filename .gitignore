@@ -2,5 +2,5 @@
 *.userprefs
 .vs
 *.cache
-RecommenderSystem/bin/Debug/
-RecommenderSystem\bin\Debug\
+RecommenderSystem/bin/Debug/*
+RecommenderSystem\bin\Debug\*
