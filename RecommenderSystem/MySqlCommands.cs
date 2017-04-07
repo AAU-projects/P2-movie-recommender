@@ -14,6 +14,11 @@ namespace RecommenderSystem
 
         public static bool CreateNewUser(string firstName, string lastName, string userName, string password)
         {
+            if (!userName.Any(char.IsLetterOrDigit) && userName.Length <= 3)
+            {
+                return false;
+            }
+
             try
             {
                 conn.Open();
@@ -26,7 +31,7 @@ namespace RecommenderSystem
                 while (myReader.Read())
                 {
                 }
-                
+
                 return true;
             }
             catch (MySqlException ex)
@@ -42,6 +47,10 @@ namespace RecommenderSystem
 
         public static bool UserExist(string userName)
         {
+            if (!userName.Any(char.IsLetterOrDigit) && userName.Length <= 3)
+            {
+                return true;
+            }
             try
             {
                 conn.Open();
