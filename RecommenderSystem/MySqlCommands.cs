@@ -9,7 +9,7 @@ namespace RecommenderSystem
 {
     static class MySqlCommands
     {
-        static string myConnectionString = "server=127.0.0.1;uid=program;pwd=123;database=recommender_system;";
+        static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         static MySqlConnection conn = new MySqlConnection { ConnectionString = myConnectionString };
 
         public static bool CreateNewUser(string firstName, string lastName, string userName, string password)
