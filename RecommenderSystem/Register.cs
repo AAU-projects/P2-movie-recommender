@@ -31,18 +31,18 @@ namespace RecommenderSystem
 
                 if (MySqlCommands.UserExist(userName))
                 {
-                    Console.WriteLine("Username is already taken!");
+                    PrintStringColored("Username is already taken!", ConsoleColor.Red);
                 }
                 else
                 {
                     success = MySqlCommands.CreateNewUser(firstName, lastName, userName, password);
                     if (success)
                     {
-                        Console.WriteLine("User was successfully created");
+                        PrintStringColored("User was successfully created", ConsoleColor.Green);
                     }
                     else
                     {
-                        Console.WriteLine("Failed to create user");
+                        PrintStringColored("Failed to create user", ConsoleColor.Red);
                     }
                 }
 
