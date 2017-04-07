@@ -12,6 +12,5 @@ namespace RecommenderSystem
         {
         }
 
-        public List<Movie> MoviesAttended = new List<Movie>();
     }
 }
