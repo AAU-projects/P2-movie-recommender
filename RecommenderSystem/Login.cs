@@ -24,13 +24,10 @@ namespace RecommenderSystem
             bool success = MySqlCommands.FindUser(userName, password);
 
             if (success)
-            {
-                PrintStringColored("You are now logged in", ConsoleColor.Green);
-            }
+                Console.WriteLine("You are now logged in");
             else
-            {
-                PrintStringColored("Wrong password or username", ConsoleColor.Red);
-            }
+                Console.WriteLine("Wrong password or username");
+
             Console.ReadLine();
         }
     }
