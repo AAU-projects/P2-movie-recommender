@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -19,23 +20,25 @@ namespace RecommenderSystem
             bool success = false;
             string firstName, lastName, userName, password;
 
+            Console.Clear();
             do
             {
                 Console.Clear();
-                do
-                {
-                    Console.Clear();
-                    Console.Write("Firstname: ");
-                    firstName = Console.ReadLine();
-                } while (!IsInputValid(firstName));
+                Console.Write("Firstname: ");
+                firstName = Console.ReadLine();
+                firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(firstName.ToLower());
+            } while (!IsInputValid(firstName));
 
-                do
-                {
-                    Console.Clear();
-                    Console.Write("Lastname: ");
-                    lastName = Console.ReadLine();
-                } while (!IsInputValid(lastName));
+            do
+            {
+                Console.Clear();
+                Console.Write("Lastname: ");
+                lastName = Console.ReadLine();
+                lastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lastName.ToLower());
+            } while (!IsInputValid(lastName));
 
+            do
+            {
                 do
                 {
                     Console.Clear();
@@ -55,18 +58,18 @@ namespace RecommenderSystem
                 Console.WriteLine();
                 if (MySqlCommands.UserExist(userName))
                 {
-                    Console.WriteLine("Username is already taken!");
+                    PrintStringColored("Username is already taken!", ConsoleColor.Red);
                 }
                 else
                 {
                     success = MySqlCommands.CreateNewUser(firstName, lastName, userName, password);
                     if (success)
                     {
-                        Console.WriteLine("User was successfully created");
+                        PrintStringColored("User was successfully created", ConsoleColor.Green);
                     }
                     else
                     {
-                        Console.WriteLine("Failed to create user");
+                        PrintStringColored("Failed to create user", ConsoleColor.Red);
                     }
                 }
                 Console.ReadLine();
@@ -75,16 +78,12 @@ namespace RecommenderSystem
 
         public bool IsInputValid(string input)
         {
-            if (input.Length < 3)
-            {
-                return false;
-            }
-            if (input.Any(char.IsLetterOrDigit) && input.Length >= 3)
+            if (input.Length >= 3 && input.Any(char.IsLetterOrDigit))
             {
                 return true;
             }
-            Console.WriteLine("Input should be atleast 3 characters");
-            Console.WriteLine("Press any key to try again");
+            PrintStringColored("Input should be atleast 3 characters", ConsoleColor.Red);
+            Console.WriteLine("\nPress any key to try again");
             Console.ReadKey();
             return false;
         }

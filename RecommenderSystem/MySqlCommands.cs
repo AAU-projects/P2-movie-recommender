@@ -115,5 +115,42 @@ namespace RecommenderSystem
                 conn.Close();
             }
         }
+
+        public static List<MovieMenuItem> GetMovies()
+        {
+            try
+            {
+                List<MovieMenuItem> allMovies = new List<MovieMenuItem>();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "SELECT * FROM imdbdata";
+                cmd.Connection = conn;
+
+                MySqlDataReader myReader = cmd.ExecuteReader();
+                List<string> actors = new List<string>();
+                while (myReader.Read())
+                {
+                    actors = new List<string>();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        actors.Add(myReader[$"Cast{i + 1}"].ToString());   
+                    }
+                    allMovies.Add(new MovieMenuItem(myReader["Movie"].ToString(), myReader["Year"].ToString(),
+                        Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]), myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
+                }
+
+                return allMovies;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                
+                return new List<MovieMenuItem>();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

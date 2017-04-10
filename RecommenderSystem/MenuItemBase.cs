@@ -14,5 +14,12 @@ namespace RecommenderSystem
         }
         public virtual string Title { get; }
         public abstract void Select();
+
+        public void PrintStringColored(string input, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(input);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }
