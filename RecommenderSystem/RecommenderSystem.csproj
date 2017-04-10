@@ -80,7 +80,8 @@
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemBase.cs" />
-    <Compile Include="Movie.cs" />
+    <Compile Include="MovieMenuItem.cs" />
+    <Compile Include="MovieMenu.cs" />
     <Compile Include="MySqlCommands.cs" />
     <Compile Include="NUnitTesting.cs" />
     <Compile Include="Person.cs" />
