@@ -8,6 +8,7 @@ namespace RecommenderSystem
 {
     class ColdStart : Menu
     {
+        public List<int> _usedNumbers = new List<int>();
         public ColdStart(string title) : base(title)
         {
         }
@@ -15,29 +16,32 @@ namespace RecommenderSystem
         public override void Select()
         {
             Console.Clear();
-            Console.WriteLine($"Choose more than 10 Movies \nPress enter to continue");
-            Console.ReadLine();
-            Console.Clear();
-
             FindUnratedMovies(10); 
-            
         }
 
-        private void FindUnratedMovies(int numberOfMovies)
+        public virtual void FindUnratedMovies(int numberOfMovies)
         {
-            List<int> usedNumbers = new List<int>();
+            List<int> rateMoviesNumbers = new List<int>();
+            List<MovieMenuItem> MoviesColdStart = new List<MovieMenuItem>();
             int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
-           
-            do
+
+            rateMoviesNumbers.Clear();
+            rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, _usedNumbers));
+            MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
+            foreach (var movieMenuItem in MoviesColdStart)
             {
-                usedNumbers = GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, usedNumbers);
-                
-            } while (true);
+                AddMenuItem(movieMenuItem);
+            }
+            AddMenuItem(new ColdStartNextPage($"--- Page {_usedNumbers.Count / 10 + 1} ---", _usedNumbers));
+
+            Console.Clear();
+            base.Select();
 
         }
 
         private List<int> GenerateRandomNumber(int totalNumberOfMovies, int numberOfGeneratedNumbers, List<int> usedNumbers)
         {
+            List<int> rateMoviesNumbers = new List<int>();
             Random random = new Random();
             int number = 0;
 
@@ -47,10 +51,10 @@ namespace RecommenderSystem
                 {
                     number = random.Next(1, totalNumberOfMovies);
                 } while (usedNumbers.Contains(number));
-
                 usedNumbers.Add(number);
+                rateMoviesNumbers.Add(number);
             }
-            return usedNumbers; 
+            return rateMoviesNumbers; 
         }
     }
 }
