@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,39 +18,74 @@ namespace RecommenderSystem
         public override void Select()
         {
             bool success = false;
+            string firstName, lastName, userName, password;
+
+            Console.Clear();
             do
             {
                 Console.Clear();
                 Console.Write("Firstname: ");
-                string firstName = Console.ReadLine();
-                Console.Write("Lastname: ");
-                string lastName = Console.ReadLine();
-                Console.Write("Username: ");
-                string userName = Console.ReadLine();
-                Console.Write("Password: ");
-                string password = Console.ReadLine();
-                Console.WriteLine();
+                firstName = Console.ReadLine();
+                firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(firstName.ToLower());
+            } while (!IsInputValid(firstName));
 
+            do
+            {
+                Console.Clear();
+                Console.Write("Lastname: ");
+                lastName = Console.ReadLine();
+                lastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lastName.ToLower());
+            } while (!IsInputValid(lastName));
+
+            do
+            {
+                do
+                {
+                    Console.Clear();
+                    Console.Write("Username: ");
+                    userName = Console.ReadLine();
+                } while (!IsInputValid(userName));
+
+                do
+                {
+                    Console.Clear();
+
+                    Console.Write("Password: ");
+                    password = Console.ReadLine();
+                } while (!IsInputValid(password));
+
+
+                Console.WriteLine();
                 if (MySqlCommands.UserExist(userName))
                 {
-                    Console.WriteLine("Username is already taken!");
+                    PrintStringColored("Username is already taken!", ConsoleColor.Red);
                 }
                 else
                 {
                     success = MySqlCommands.CreateNewUser(firstName, lastName, userName, password);
                     if (success)
                     {
-                        Console.WriteLine("User was successfully created");
+                        PrintStringColored("User was successfully created", ConsoleColor.Green);
                     }
                     else
                     {
-                        Console.WriteLine("Failed to create user");
+                        PrintStringColored("Failed to create user", ConsoleColor.Red);
                     }
                 }
-
+                Console.ReadLine();
             } while (!success);
+        }
 
-            Console.ReadLine();
+        public bool IsInputValid(string input)
+        {
+            if (input.Length >= 3 && input.Any(char.IsLetterOrDigit))
+            {
+                return true;
+            }
+            PrintStringColored("Input should be atleast 3 characters", ConsoleColor.Red);
+            Console.WriteLine("\nPress any key to try again");
+            Console.ReadKey();
+            return false;
         }
     }
 }
