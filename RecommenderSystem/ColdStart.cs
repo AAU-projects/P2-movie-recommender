@@ -9,8 +9,10 @@ namespace RecommenderSystem
     class ColdStart : Menu
     {
         public List<int> _usedNumbers = new List<int>();
-        public ColdStart(string title) : base(title)
+        public bool _firststart = true;
+        public ColdStart(string title, List<int> usedNumbers) : base(title)
         {
+            _usedNumbers = usedNumbers;
         }
 
         public override void Select()
@@ -19,24 +21,27 @@ namespace RecommenderSystem
             FindUnratedMovies(10); 
         }
 
-        public virtual void FindUnratedMovies(int numberOfMovies)
+        public void FindUnratedMovies(int numberOfMovies)
         {
-            List<int> rateMoviesNumbers = new List<int>();
-            List<MovieMenuItem> MoviesColdStart = new List<MovieMenuItem>();
-            int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
-
-            rateMoviesNumbers.Clear();
-            rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, _usedNumbers));
-            MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
-            foreach (var movieMenuItem in MoviesColdStart)
+            if (_firststart)
             {
-                AddMenuItem(movieMenuItem);
-            }
-            AddMenuItem(new ColdStartNextPage($"--- Page {_usedNumbers.Count / 10 + 1} ---", _usedNumbers));
+                List<int> rateMoviesNumbers = new List<int>();
+                List<MovieMenuItem> MoviesColdStart = new List<MovieMenuItem>();
+                int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
 
+                rateMoviesNumbers.Clear();
+                rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, _usedNumbers));
+                MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
+                foreach (var movieMenuItem in MoviesColdStart)
+                {
+                    AddMenuItem(movieMenuItem);
+                }
+                ColdStart nextPage = new ColdStart($"--- Page {_usedNumbers.Count / 10 + 1} ---", _usedNumbers);
+                AddMenuItem(nextPage);
+                _firststart = false;
+            }
             Console.Clear();
             base.Select();
-
         }
 
         private List<int> GenerateRandomNumber(int totalNumberOfMovies, int numberOfGeneratedNumbers, List<int> usedNumbers)

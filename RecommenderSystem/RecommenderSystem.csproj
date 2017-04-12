@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="Actor.cs" />
     <Compile Include="ColdStart.cs" />
-    <Compile Include="ColdStartNextPage.cs" />
     <Compile Include="Director.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Menu.cs" />
