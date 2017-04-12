@@ -36,6 +36,11 @@ namespace RecommenderSystem
             {
                 Console.WriteLine(actor);
             }
+
+            Console.WriteLine();
+            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", new RateMovie("Give this movie a Thumbs Up!", ConsoleColor.Green),
+                new RateMovie("Give this movie a Thumbs Down!", ConsoleColor.Red));
+            rateMenu.Start();
             Console.ReadLine();
         }
     }
