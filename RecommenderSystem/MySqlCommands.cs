@@ -10,7 +10,7 @@ namespace RecommenderSystem
     static class MySqlCommands
     {
         static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
-        static MySqlConnection conn = new MySqlConnection { ConnectionString = myConnectionString };
+        static MySqlConnection conn = new MySqlConnection {ConnectionString = myConnectionString};
 
         public static bool CreateNewUser(string firstName, string lastName, string userName, string password)
         {
@@ -114,6 +114,112 @@ namespace RecommenderSystem
             {
                 conn.Close();
             }
+        }
+
+        public static List<MovieMenuItem> GetMovies()
+        {
+            try
+            {
+                List<MovieMenuItem> allMovies = new List<MovieMenuItem>();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "SELECT * FROM imdbdata";
+                cmd.Connection = conn;
+
+                MySqlDataReader myReader = cmd.ExecuteReader();
+                List<string> actors = new List<string>();
+                while (myReader.Read())
+                {
+                    actors = new List<string>();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        actors.Add(myReader[$"Cast{i + 1}"].ToString());
+                    }
+                    allMovies.Add(new MovieMenuItem(myReader["Movie"].ToString(), myReader["Year"].ToString(),
+                        Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]),
+                        myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
+                }
+
+                return allMovies;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return new List<MovieMenuItem>();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static List<MovieMenuItem> FindMovieFromID(List<int> id)
+        {
+            List<MovieMenuItem> MovieList = new List<MovieMenuItem>();
+            List<string> actors = new List<string>();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                MySqlDataReader myReader;
+                conn.Open();
+                cmd.Connection = conn;
+
+                for (int i = 0; i < id.Count; i++)
+                {
+                    cmd.CommandText = $"SELECT * FROM imdbdata WHERE ID='{id[i]}';";
+
+                    myReader = cmd.ExecuteReader();
+
+                    while (myReader.Read())
+                    {
+                        actors.Clear();
+                        for (int j = 0; j < 10; j++)
+                        {
+                            actors.Add(myReader[$"Cast{j + 1}"].ToString());
+                        }
+                        MovieList.Add(new MovieMenuItem(myReader["Movie"].ToString(), myReader["Year"].ToString(),
+                            Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]),
+                            myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
+                    }
+                    myReader.Close();
+                }
+                conn.Close();
+                return MovieList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<MovieMenuItem>();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static int NumberOfRowsInTable(string table)
+        {
+            try
+            {
+                string query = $"SELECT COUNT(*) FROM {table}";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    conn.Open();
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
         }
     }
 }
