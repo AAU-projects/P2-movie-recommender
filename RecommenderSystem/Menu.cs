@@ -9,7 +9,7 @@ namespace RecommenderSystem
     class Menu : MenuItemBase
     {
         private bool _running = false;
-        private List<MenuItemBase> _menuItems = new List<MenuItemBase>();
+        protected List<MenuItemBase> _menuItems = new List<MenuItemBase>();
 
         private const ConsoleColor Black = ConsoleColor.Black;
         private const ConsoleColor White = ConsoleColor.White;
@@ -51,7 +51,7 @@ namespace RecommenderSystem
             } while (_running);
         }
 
-        private void DrawMenu()
+        protected virtual void DrawMenu()
         {
             Console.Clear();
             Console.Title = this.Title;
@@ -89,7 +89,7 @@ namespace RecommenderSystem
             }
         }
 
-        private void MoveUp()
+        protected virtual void MoveUp()
         {
             if (Console.CursorTop - 2 < 0) return;
             RemoveHighlight(_menuItems[Console.CursorTop - 1].Title, Console.CursorTop);
@@ -138,7 +138,7 @@ namespace RecommenderSystem
             }
         }
 
-        private static void HighlightText(string text, int pos)
+        protected virtual void HighlightText(string text, int pos)
         {
             int startingPoint = (Console.WindowWidth - text.Length) / 2;
             Console.SetCursorPosition(startingPoint, pos);
@@ -146,7 +146,8 @@ namespace RecommenderSystem
             Console.Write(text);
             Highlightcolor(false);
         }
-        private static void RemoveHighlight(string text, int pos)
+
+        protected virtual void RemoveHighlight(string text, int pos)
         {
             int startingPoint = (Console.WindowWidth - text.Length) / 2;
             Console.SetCursorPosition(startingPoint, pos);
