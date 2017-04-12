@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26206.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommenderSystem", "RecommenderSystem\RecommenderSystem.csproj", "{6A6BF836-61DC-4632-8982-308111A27651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommenderSystem.Tests", "RecommenderSystem.Tests01\RecommenderSystem.Tests.csproj", "{738B0F33-A48B-4AB4-9C6B-4C77F053E50D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6A6BF836-61DC-4632-8982-308111A27651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A6BF836-61DC-4632-8982-308111A27651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A6BF836-61DC-4632-8982-308111A27651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{738B0F33-A48B-4AB4-9C6B-4C77F053E50D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{738B0F33-A48B-4AB4-9C6B-4C77F053E50D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{738B0F33-A48B-4AB4-9C6B-4C77F053E50D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{738B0F33-A48B-4AB4-9C6B-4C77F053E50D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
