@@ -9,8 +9,7 @@ namespace RecommenderSystem
     class MovieMenu : Menu
     {
         public MovieMenu(string title) : base(title)
-        {
-        }
+        { }
 
         private bool _firstRun = true;
 
