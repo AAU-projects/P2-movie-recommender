@@ -6,55 +6,93 @@ using System.Threading.Tasks;
 
 namespace RecommenderSystem
 {
-    class RateMovieMenu : Menu
+    class RateMovieMenu : MenuItemBase
     {
         public RateMovieMenu(string title) : base(title)
         { }
 
-        public RateMovieMenu(string title, params MenuItemBase[] items) : base(title)
+        private List<RateMovie> _options = new List<RateMovie>(){new RateMovie("Thumps up", ConsoleColor.Green), new RateMovie("Thumps down", ConsoleColor.Red)};
+        private int _optionOnePossition;
+        private int _currentOption;
+        private bool _running = false;
+
+        public override void Select()
         {
-            if (items != null)
+            this.Start();
+        }
+
+        public void Start()
+        {
+            _running = true;
+            DrawMenu();
+            do
             {
-                foreach (MenuItemBase menuItem in items)
-                {
-                    AddMenuItem(menuItem);
-                }
+                HandleInput();
+            } while (_running);
+        }
+
+        private void HandleInput()
+        {
+            ConsoleKeyInfo cki = Console.ReadKey();
+            switch (cki.Key)
+            {
+                case ConsoleKey.Backspace:
+                case ConsoleKey.Escape:
+                    _running = false;
+                    break;
+                case ConsoleKey.UpArrow:
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                    MoveUp();
+                    break;
+                case ConsoleKey.DownArrow:
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                    MoveDown();
+                    break;
+                case ConsoleKey.Enter:
+                    SelectMenuItem();
+                    break;
+                default:
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                    break;
             }
         }
 
-        private int _thumbsOnePossition;
-
-        protected override void DrawMenu()
+        private void SetCurrentOption(int position)
         {
-            _thumbsOnePossition = Console.CursorTop;
-            foreach (var thumbs in _menuItems)
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write("   ");
+            _currentOption = position - _optionOnePossition;
+            Console.SetCursorPosition(0,position);
+            Console.Write("->");
+        }
+
+        private void SelectMenuItem()
+        {
+            _options.ElementAt(_currentOption).Select();
+        }
+
+        private void MoveDown()
+        {
+            if (Console.CursorTop + 1 > _optionOnePossition + (_options.Count - 1)) return;
+            SetCurrentOption(Console.CursorTop + 1);
+        }
+
+        private void MoveUp()
+        {
+            if (Console.CursorTop -1 < _optionOnePossition) return;
+            SetCurrentOption(Console.CursorTop - 1);
+        }
+
+        private void DrawMenu()
+        {
+            _optionOnePossition = Console.CursorTop;
+            foreach (RateMovie option in _options)
             {
-                thumbs.PrintTitleColored();
+                Console.Write("   ");
+                option.PrintTitleColored();
             }
-
-            HighlightText(_menuItems[0].Title, _thumbsOnePossition);
-        }
-
-        protected override void HighlightText(string text, int pos)
-        {
-            Console.SetCursorPosition(0, pos);
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(text);
-        }
-
-        protected override void RemoveHighlight(string text, int pos)
-        {
-            Console.SetCursorPosition(0, pos);
-            Console.ResetColor();
-            Console.Write(text);
-        }
-
-        protected override void MoveUp()
-        {
-            if (Console.CursorTop - 1 < _thumbsOnePossition) return;
-            RemoveHighlight(_menuItems[Console.CursorTop - _thumbsOnePossition - 1].Title, Console.CursorTop);
-            HighlightText(_menuItems[Console.CursorTop - _thumbsOnePossition].Title, Console.CursorTop - 1);
+            Console.WriteLine("\nUse Up and Down arrow keys to choose an rating and enter to confirm.\nPress Esc to go back");
+            SetCurrentOption(_optionOnePossition);
         }
     }
 }

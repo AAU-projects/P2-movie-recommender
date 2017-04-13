@@ -8,17 +8,12 @@ namespace RecommenderSystem
 {
     class RateMovie : MenuItemBase
     {
-        public RateMovie(string title, ConsoleColor color) : base(title)
-        {
-            this._titleColor = color;
-        }
-
-        private ConsoleColor _titleColor;
-
-
+        public RateMovie(string title, ConsoleColor color) : base(title, color)
+        {}
+        
         public override void Select()
         {
-
+            Console.Write("Movie Rated! \t");
         } 
     }
 }
