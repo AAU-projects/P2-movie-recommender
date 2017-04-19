@@ -66,6 +66,7 @@ namespace RecommenderSystem
                     if (success)
                     {
                         PrintStringColored("User was successfully created", ConsoleColor.Green);
+                        MySqlCommands.CreateUserTable(userName);
                     }
                     else
                     {

@@ -30,6 +30,7 @@ namespace RecommenderSystem
                 Console.ReadKey();
                 Menu LoggedInMenu = new Menu($"Welcome {userName}!", new MovieMenu("View all movies"),
                     new MovieMenu("Rate movies"), new ColdStart("Cold start", new List<int>()));
+                User.Username = userName;
                 LoggedInMenu.Start();
             }
             else
