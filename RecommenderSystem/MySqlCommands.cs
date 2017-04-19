@@ -174,7 +174,7 @@ namespace RecommenderSystem
 
                     while (myReader.Read())
                     {
-                        actors.Clear();
+                        actors = new List<string>();
                         for (int j = 0; j < 10; j++)
                         {
                             actors.Add(myReader[$"Cast{j + 1}"].ToString());
