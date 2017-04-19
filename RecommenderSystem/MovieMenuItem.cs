@@ -28,6 +28,7 @@ namespace RecommenderSystem
         {
             Console.Clear();
             Console.WriteLine($"{Title}   {_releaseDate}");
+            Console.WriteLine($"");
             Console.WriteLine($"Duration: {_duration}");
             Console.WriteLine($"{_resume}");
             Console.WriteLine($"Director: {_director}.");
@@ -38,10 +39,8 @@ namespace RecommenderSystem
             }
 
             Console.WriteLine();
-            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", new RateMovie("Give this movie a Thumbs Up!", ConsoleColor.Green),
-                new RateMovie("Give this movie a Thumbs Down!", ConsoleColor.Red));
+            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie");
             rateMenu.Start();
-            Console.ReadLine();
         }
     }
 }
