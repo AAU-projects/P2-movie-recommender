@@ -8,7 +8,7 @@ namespace RecommenderSystem
 {
     class Menu : MenuItemBase
     {
-        private bool _running = false;
+        protected bool _running = false;
         protected List<MenuItemBase> _menuItems = new List<MenuItemBase>();
 
         private const ConsoleColor Black = ConsoleColor.Black;

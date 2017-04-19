@@ -19,8 +19,12 @@ namespace RecommenderSystem
         
         public override void Select()
         {
-            Console.Write("Movie Rated! \t");
+            Console.Clear();
+            PrintStringColored("Movie Rated!", ConsoleColor.Magenta);
+            Console.WriteLine("\nPress any key to continue...");
             MySqlCommands.RateMovie(_movieID, _enumvalue);
+            User.UpdateUser();
+            Console.ReadKey();
         } 
     }
 }
