@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace RecommenderSystem
 {
-    class User : Person
+    class User
     {
-        private string _userName;
-        private string _password;
+        public static string Username;
 
-        public User(string firstName, string lastName, string userName, string password) : base(firstName, lastName)
+        public User(string userName)
         {
-            _userName = userName;
-            _password = password;
+            Username = userName;
         }
     }
 }
