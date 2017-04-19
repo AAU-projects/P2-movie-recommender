@@ -28,6 +28,7 @@ namespace RecommenderSystem
         {
             Console.Clear();
             Console.WriteLine($"{Title}   {_releaseDate}");
+            Console.WriteLine($"");
             Console.WriteLine($"Duration: {_duration}");
             Console.WriteLine($"{_resume}");
             Console.WriteLine($"Director: {_director}.");
