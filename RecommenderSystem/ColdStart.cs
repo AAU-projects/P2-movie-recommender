@@ -12,6 +12,11 @@ namespace RecommenderSystem
         public List<int> UsedNumbers = new List<int>();
         public bool _firststart = true;
 
+        public ColdStart(string title) : base(title)
+        {
+            UsedNumbers = new List<int>();
+        }
+
         public ColdStart(string title, List<int> usedNumbers) : base(title)
         {
             UsedNumbers = usedNumbers;
@@ -32,17 +37,21 @@ namespace RecommenderSystem
             }
         }
 
-        public void FindUnratedMovies(int numberOfMovies)
+        private void UpdateTitle()
+        {
+            Title = $"Cold Start - you have rated {User.NumberOfMoviesRated + 1} out of 10 movies";
+        }
+
+        private void FindUnratedMovies(int numberOfMovies)
         {
             if (_firststart)
             {
                 List<int> rateMoviesNumbers = new List<int>();
-                List<MovieMenuItem> MoviesColdStart = new List<MovieMenuItem>();
                 int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
 
                 rateMoviesNumbers.Clear();
                 rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, UsedNumbers));
-                MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
+                List<MovieMenuItem> MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
                 foreach (var movieMenuItem in MoviesColdStart)
                 {
                     AddMenuItem(movieMenuItem);
@@ -81,10 +90,15 @@ namespace RecommenderSystem
             do
             {
                 HandleInput();
+                UpdateTitle();
             } while (_running && User.NumberOfMoviesRated < 10);
 
-            Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
-            loggedInMenu.Start();
+            if (User.NumberOfMoviesRated >= 10 && UsedNumbers.Count % 10 == 0) // makes sure that only one startpage is created, a bool could maybe be created with a adress pointer to each class instead?
+            {
+                Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
+                loggedInMenu.Start();
+                UsedNumbers.Add(0);                                                     
+            }
         }
     }
 }
