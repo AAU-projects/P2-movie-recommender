@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework.Constraints;
 
 namespace RecommenderSystem
 {
     class RateMovieMenu : MenuItemBase
     {
-        public RateMovieMenu(string title) : base(title)
-        { }
+        public RateMovieMenu(string title, int movieID) : base(title)
+        {
+            _options = new List<RateMovie>(){new RateMovie("Thumbs up", ConsoleColor.Green, "thumbsup", movieID), new RateMovie("Thumbs down", ConsoleColor.Red, "thumbsdown", movieID )};
+        }
 
-        private List<RateMovie> _options = new List<RateMovie>(){new RateMovie("Thumps up", ConsoleColor.Green), new RateMovie("Thumps down", ConsoleColor.Red)};
+        private List<RateMovie> _options;
         private int _optionOnePossition;
         private int _currentOption;
         private bool _running = false;

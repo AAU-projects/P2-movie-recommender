@@ -8,8 +8,9 @@ namespace RecommenderSystem
 {
     class MovieMenuItem : MenuItemBase
     {
-        public MovieMenuItem(string title, string releaseDate, double rating, int duration, string resume, string director, List<string> actors) : base(title)
+        public MovieMenuItem(int movieID, string title, string releaseDate, double rating, int duration, string resume, string director, List<string> actors) : base(title)
         {
+            this._movieID = movieID;
             this._releaseDate = releaseDate;
             this._rating = rating;
             this._duration = duration;
@@ -17,6 +18,8 @@ namespace RecommenderSystem
             this._director = director;
             this._actors = actors;
         }
+
+        private int _movieID;
         private string _releaseDate;
         private double _rating;
         private int _duration;
@@ -29,7 +32,7 @@ namespace RecommenderSystem
             Console.Clear();
             Console.WriteLine($"{Title}   {_releaseDate}");
             Console.WriteLine($"");
-            Console.WriteLine($"Duration: {_duration}");
+            Console.WriteLine($"Duration: {_duration} min");
             Console.WriteLine($"{_resume}");
             Console.WriteLine($"Director: {_director}.");
             Console.WriteLine("\nLeading actors");
@@ -39,7 +42,7 @@ namespace RecommenderSystem
             }
 
             Console.WriteLine();
-            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie");
+            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", _movieID);
             rateMenu.Start();
         }
     }
