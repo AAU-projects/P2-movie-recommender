@@ -20,13 +20,21 @@ namespace RecommenderSystem
         public override void Select()
         {
             Console.Clear();
-            FindUnratedMovies(10);
-            _running = false;
+
+            if (User.NumberOfMoviesRated >= 10)
+            {
+                _running = false;
+            }
+            else
+            {
+                FindUnratedMovies(10);
+                this.Start();
+            }
         }
 
         public void FindUnratedMovies(int numberOfMovies)
         {
-            if (_firststart && User.NumberOfMoviesRated <= 10)
+            if (_firststart)
             {
                 List<int> rateMoviesNumbers = new List<int>();
                 List<MovieMenuItem> MoviesColdStart = new List<MovieMenuItem>();
@@ -43,12 +51,7 @@ namespace RecommenderSystem
                 AddMenuItem(nextPage);
                 _firststart = false;
             }
-            else
-            {
-                Startmenu loggedInStartmenu = new Startmenu($"Welcome {User.Username}!");
-            }
             Console.Clear();
-            base.Select();
         }
 
         private List<int> GenerateRandomNumber(int totalNumberOfMovies, int numberOfGeneratedNumbers, List<int> usedNumbers)
@@ -67,6 +70,18 @@ namespace RecommenderSystem
                 rateMoviesNumbers.Add(number);
             }
             return rateMoviesNumbers; 
+        }
+
+        public override void Start()
+        {
+            _running = true;
+            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.Black;
+            DrawMenu();
+            do
+            {
+                HandleInput();
+            } while (_running && User.NumberOfMoviesRated < 10);
         }
     }
 }
