@@ -1,13 +1,14 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RecommenderSystem
 {
-    static class MySqlCommands2
+    static class MySqlCommands
     {
         private static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         private static MySqlConnection conn = new MySqlConnection { ConnectionString = myConnectionString };
@@ -34,9 +35,9 @@ namespace RecommenderSystem
             MySqlCommand cmd = new MySqlCommand($"SELECT count(*) FROM {User.Username}_movies WHERE movieID= @movieID", conn);
             cmd.Parameters.AddWithValue("@movieID", movieId);
 
-            MySqlDataReader myReader = SendQuery(cmd);
+            DataTable results = SendQuery(cmd);
 
-            if (Convert.ToInt32(myReader[0]) == 1) return true;
+            if (Convert.ToInt32(results.Rows[0][0]) == 1) return true;
 
             return false;
         }
@@ -47,28 +48,29 @@ namespace RecommenderSystem
             List<string> actors = new List<string>();
 
             MySqlCommand cmd = new MySqlCommand();
-            MySqlDataReader myReader;
+            DataTable results;
 
             for (int i = 0; i < id.Count; i++)
             {
                 cmd.CommandText = $"SELECT * FROM imdbdata WHERE ID='{id[i]}';";
+                cmd.Connection = conn;
 
-                myReader = SendQuery(cmd);
-
-                actors = new List<string>();
-
+                results = SendQuery(cmd);
+                
                 try
                 {
-                    for (int j = 0; j < 10; j++)
+                    foreach (DataRow row in results.Rows)
                     {
-                        actors.Add(myReader[$"Cast{j + 1}"].ToString());
+                        actors = new List<string>();
+                        for (int j = 8; j < 18; j++)
+                        {
+                            actors.Add(row[j].ToString());
+                        }
+
+                        MovieList.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
+                            Convert.ToDouble(row[2]), Convert.ToInt32(row[5]),
+                            row[6].ToString(), row[7].ToString(), actors));
                     }
-
-                    MovieList.Add(new MovieMenuItem(Convert.ToInt32(myReader["ID"]), myReader["Movie"].ToString(), myReader["Year"].ToString(),
-                        Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]),
-                        myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
-
-                    myReader.Close();
                 }
                 catch (Exception ex)
                 {
@@ -88,25 +90,24 @@ namespace RecommenderSystem
             cmd.CommandText = "SELECT * FROM imdbdata";
             cmd.Connection = conn;
 
-            MySqlDataReader myReader = SendQuery(cmd);
-
-            actors = new List<string>();
-
+            DataTable results = SendQuery(cmd);
+            
             try
             {
-                while (myReader.Read())
+                foreach (DataRow row in results.Rows)
                 {
-                    for (int i = 0; i < 10; i++)
+                    actors = new List<string>();
+                    for (int i = 8; i < 18; i++)
                     {
-                        actors.Add(myReader[$"Cast{i + 1}"].ToString());
+                        actors.Add(row[i].ToString());
                     }
 
-                    allMovies.Add(new MovieMenuItem(Convert.ToInt32(myReader["ID"]), myReader["Movie"].ToString(), myReader["Year"].ToString(),
-                        Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]),
-                        myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
+                    allMovies.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
+                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]),
+                        row[6].ToString(), row[7].ToString(), actors));
                 }
-                
-                return allMovies;
+
+                    return allMovies;
             }
             catch (Exception ex)
             {
@@ -124,9 +125,9 @@ namespace RecommenderSystem
             cmd.Parameters.AddWithValue("@password", password);
             cmd.Connection = conn;
 
-            MySqlDataReader myReader = SendQuery(cmd);
+            DataTable results = SendQuery(cmd);
 
-            if (Convert.ToInt32(myReader[0]) == 1) return true;
+            if (Convert.ToInt32(results.Rows[0][0]) == 1) return true;
 
             return false;
         }
@@ -140,9 +141,9 @@ namespace RecommenderSystem
             cmd.Parameters.AddWithValue("@username", userName);
             cmd.Connection = conn;
 
-            MySqlDataReader myReader = SendQuery(cmd);
+            DataTable results = SendQuery(cmd);
 
-            if (Convert.ToInt32(myReader[0]) == 1) return true;
+            if (Convert.ToInt32(results.Rows[0][0]) == 1) return true;
 
             return false;
         }
@@ -210,22 +211,35 @@ namespace RecommenderSystem
             }
         }
 
-        private static MySqlDataReader SendQuery(MySqlCommand cmd)
+        private static DataTable SendQuery(MySqlCommand cmd)
         {
+            DataTable results = new DataTable();
             try
             {
                 conn.Open();
 
-                MySqlDataReader myReader = cmd.ExecuteReader();
-                while (myReader.Read()) { }
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    try
+                    {
+                        results.Load(reader);
+                    }
+                    catch (ConstraintException)
+                    {
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.ReadLine();
+                    }
+                }
 
-                return myReader;
-
+                return results;
             }
             catch (MySqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
+                return results;
             }
             finally
             {
