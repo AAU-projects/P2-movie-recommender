@@ -72,6 +72,7 @@ namespace RecommenderSystem
         private void SelectMenuItem()
         {
             _options.ElementAt(_currentOption).Select();
+            _running = false;
         }
 
         private void MoveDown()
