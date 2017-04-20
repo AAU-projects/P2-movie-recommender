@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace RecommenderSystem
 {
-    static class MySqlCommands
+    static class MySqlCommands2
     {
         static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         static MySqlConnection conn = new MySqlConnection {ConnectionString = myConnectionString};
