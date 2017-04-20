@@ -82,6 +82,9 @@ namespace RecommenderSystem
             {
                 HandleInput();
             } while (_running && User.NumberOfMoviesRated < 10);
+
+            Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
+            loggedInMenu.Start();
         }
     }
 }
