@@ -28,13 +28,15 @@ namespace RecommenderSystem
                 PrintStringColored("You are now logged in", ConsoleColor.Green);
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey();
-                Menu LoggedInMenu = new Menu($"Welcome {userName}!", new MovieMenu("View all movies"), new MovieMenu("Rate movies"), new ColdStart("Cold start", new List<int>()));
-                LoggedInMenu.Start();
+                new User(userName);
+                Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
+                loggedInMenu.Start();
             }
             else
+            {
                 PrintStringColored("Wrong password or username", ConsoleColor.Red);
-
-            Console.ReadLine();
+                Console.ReadLine();
+            }
         }
     }
 }

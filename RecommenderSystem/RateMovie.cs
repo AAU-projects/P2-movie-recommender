@@ -8,17 +8,23 @@ namespace RecommenderSystem
 {
     class RateMovie : MenuItemBase
     {
-        public RateMovie(string title, ConsoleColor color) : base(title)
+        private int _movieID;
+        private string _enumvalue;
+
+        public RateMovie(string title, ConsoleColor color, string enumvalue, int movieID) : base(title, color)
         {
-            this._titleColor = color;
+            _movieID = movieID;
+            _enumvalue = enumvalue;
         }
-
-        private ConsoleColor _titleColor;
-
-
+        
         public override void Select()
         {
-
+            Console.Clear();
+            PrintStringColored("Movie Rated!", ConsoleColor.Magenta);
+            Console.WriteLine("\nPress any key to continue...");
+            MySqlCommands.RateMovie(_movieID, _enumvalue);
+            User.UpdateUser();
+            Console.ReadKey();
         } 
     }
 }

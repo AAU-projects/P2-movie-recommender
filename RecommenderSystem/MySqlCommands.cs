@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -12,6 +13,26 @@ namespace RecommenderSystem
         static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         static MySqlConnection conn = new MySqlConnection {ConnectionString = myConnectionString};
 
+        public static bool CreateUserTable(string userName)
+        {
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(
+                    $"CREATE TABLE `{userName}_movies` ( `id`  int NOT NULL AUTO_INCREMENT , `movieID`  int NULL , `rating`  varchar(255) NULL , PRIMARY KEY (`id`));",conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public static bool CreateNewUser(string firstName, string lastName, string userName, string password)
         {
             if (!userName.Any(char.IsLetterOrDigit) && userName.Length <= 3)
@@ -31,7 +52,6 @@ namespace RecommenderSystem
                 while (myReader.Read())
                 {
                 }
-
                 return true;
             }
             catch (MySqlException ex)
@@ -135,7 +155,7 @@ namespace RecommenderSystem
                     {
                         actors.Add(myReader[$"Cast{i + 1}"].ToString());
                     }
-                    allMovies.Add(new MovieMenuItem(myReader["Movie"].ToString(), myReader["Year"].ToString(),
+                    allMovies.Add(new MovieMenuItem(Convert.ToInt32(myReader["ID"]), myReader["Movie"].ToString(), myReader["Year"].ToString(),
                         Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]),
                         myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
                 }
@@ -174,12 +194,12 @@ namespace RecommenderSystem
 
                     while (myReader.Read())
                     {
-                        actors.Clear();
+                        actors = new List<string>();
                         for (int j = 0; j < 10; j++)
                         {
                             actors.Add(myReader[$"Cast{j + 1}"].ToString());
                         }
-                        MovieList.Add(new MovieMenuItem(myReader["Movie"].ToString(), myReader["Year"].ToString(),
+                        MovieList.Add(new MovieMenuItem(Convert.ToInt32(myReader["ID"]), myReader["Movie"].ToString(), myReader["Year"].ToString(),
                             Convert.ToDouble(myReader["Rating"]), Convert.ToInt32(myReader["Runtime"]),
                             myReader["PlotOutline"].ToString(), myReader["Director"].ToString(), actors));
                     }
@@ -220,6 +240,72 @@ namespace RecommenderSystem
                 conn.Close();
             }
 
+        }
+
+        public static bool IsMovieRated(int movieId)
+        {
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand($"SELECT count(*) FROM {User.Username}_movies WHERE movieID= @movieID",conn);
+                cmd.Parameters.AddWithValue("@movieID", movieId);
+
+                MySqlDataReader myReader = cmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                }
+
+                if (Convert.ToInt32(myReader[0]) == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static bool RateMovie(int movieId, string enumvalue)
+        {
+            try
+            {
+                if (IsMovieRated(movieId))
+                {
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+                else
+                {
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
+                                                        $"Values ('{movieId}', '{enumvalue}')", conn);
+
+                    cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }
