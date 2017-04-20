@@ -8,7 +8,7 @@ namespace RecommenderSystem
 {
     class Menu : MenuItemBase
     {
-        private bool _running = false;
+        protected bool _running = false;
         protected List<MenuItemBase> _menuItems = new List<MenuItemBase>();
 
         private const ConsoleColor Black = ConsoleColor.Black;
@@ -39,7 +39,7 @@ namespace RecommenderSystem
             }
         }
 
-        public void Start()
+        public virtual void Start()
         {
             _running = true;
             Console.CursorVisible = false;
@@ -65,7 +65,7 @@ namespace RecommenderSystem
             HighlightText(_menuItems[0].Title, 1);
         }
 
-        private void HandleInput()
+        public void HandleInput()
         {
             ConsoleKeyInfo cki = Console.ReadKey();
             switch (cki.Key)

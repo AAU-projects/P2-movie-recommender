@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,17 +9,27 @@ namespace RecommenderSystem
 {
     class ColdStart : Menu
     {
-        public List<int> _usedNumbers = new List<int>();
+        public List<int> UsedNumbers = new List<int>();
         public bool _firststart = true;
+
         public ColdStart(string title, List<int> usedNumbers) : base(title)
         {
-            _usedNumbers = usedNumbers;
+            UsedNumbers = usedNumbers;
         }
 
         public override void Select()
         {
             Console.Clear();
-            FindUnratedMovies(10); 
+
+            if (User.NumberOfMoviesRated >= 10)
+            {
+                _running = false;
+            }
+            else
+            {
+                FindUnratedMovies(10);
+                this.Start();
+            }
         }
 
         public void FindUnratedMovies(int numberOfMovies)
@@ -30,18 +41,17 @@ namespace RecommenderSystem
                 int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
 
                 rateMoviesNumbers.Clear();
-                rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, _usedNumbers));
+                rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, UsedNumbers));
                 MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
                 foreach (var movieMenuItem in MoviesColdStart)
                 {
                     AddMenuItem(movieMenuItem);
                 }
-                ColdStart nextPage = new ColdStart($"--- Page {_usedNumbers.Count / 10 + 1} ---", _usedNumbers);
+                ColdStart nextPage = new ColdStart($"--- Page {UsedNumbers.Count / 10 + 1} ---", UsedNumbers);
                 AddMenuItem(nextPage);
                 _firststart = false;
             }
             Console.Clear();
-            base.Select();
         }
 
         private List<int> GenerateRandomNumber(int totalNumberOfMovies, int numberOfGeneratedNumbers, List<int> usedNumbers)
@@ -60,6 +70,18 @@ namespace RecommenderSystem
                 rateMoviesNumbers.Add(number);
             }
             return rateMoviesNumbers; 
+        }
+
+        public override void Start()
+        {
+            _running = true;
+            Console.CursorVisible = false;
+            Console.ForegroundColor = ConsoleColor.Black;
+            DrawMenu();
+            do
+            {
+                HandleInput();
+            } while (_running && User.NumberOfMoviesRated < 10);
         }
     }
 }

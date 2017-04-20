@@ -299,7 +299,6 @@ namespace RecommenderSystem
             }
             catch (MySqlException e)
             {
-                throw;
                 Console.WriteLine(e.Message);
                 return false;
             }
