@@ -43,6 +43,7 @@ namespace RecommenderSystem
 
             Console.WriteLine();
             RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", _movieID);
+            User.UpdateUser();
             rateMenu.Start();
         }
     }
