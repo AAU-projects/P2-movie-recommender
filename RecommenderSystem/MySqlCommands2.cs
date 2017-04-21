@@ -13,6 +13,34 @@ namespace RecommenderSystem
         private static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         private static MySqlConnection conn = new MySqlConnection { ConnectionString = myConnectionString };
 
+        public static string FindRatingFromMovieID(int id)
+        {
+            MySqlCommand cmd = new MySqlCommand();
+            DataTable results;
+            string result = "notRated";
+
+            cmd.CommandText = $"SELECT * FROM {User.Username}_movies WHERE movieID = @id;";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Connection = conn;
+            results = SendQuery(cmd);
+
+            try
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    result = row[2].ToString();
+                }
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return result;
+            }
+        }
+
         public static bool RateMovie(int movieId, string enumvalue)
         {
             if (IsMovieRated(movieId))
@@ -188,6 +216,33 @@ namespace RecommenderSystem
                 conn.Close();
             }
 
+        }
+        public static List<int> GetUserRatedMovies()
+        {
+            List<int> MovieID = new List<int>();
+
+            MySqlCommand cmd = new MySqlCommand();
+            DataTable results;
+
+            cmd.CommandText = $"SELECT * FROM {User.Username}_movies;";
+            cmd.Connection = conn;
+
+            results = SendQuery(cmd);
+
+            try
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    MovieID.Add(Convert.ToInt32(row[1]));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return MovieID;
         }
 
         private static bool SendNonQuery(MySqlCommand cmd)
