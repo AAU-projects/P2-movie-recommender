@@ -29,8 +29,17 @@ namespace RecommenderSystem
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey();
                 new User(userName);
-                Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
-                loggedInMenu.Start();
+
+                if (User.NumberOfMoviesRated < 10)
+                {
+                    ColdStart coldStartMenu = new ColdStart($"Cold Start - you have rated {User.NumberOfMoviesRated} out of 10 movies");
+                    coldStartMenu.Select();
+                }
+                else
+                {
+                    Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
+                    loggedInMenu.Start();
+                }
             }
             else
             {
