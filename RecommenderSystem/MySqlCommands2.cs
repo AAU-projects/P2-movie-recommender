@@ -15,19 +15,36 @@ namespace RecommenderSystem
 
         public static bool RateMovie(int movieId, string enumvalue)
         {
-            if (IsMovieRated(movieId))
+            if (IsMovieIdValid(movieId) && IsEnumvalueValid(enumvalue))
             {
-                MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
+                if (IsMovieRated(movieId))
+                {
+                    MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
 
-                return SendNonQuery(cmd);
-            }
-            else
-            {
-                MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
-                                                    $"Values ('{movieId}', '{enumvalue}')", conn);
+                    return SendNonQuery(cmd);
+                }
+                else
+                {
+                    MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
+                                                        $"Values ('{movieId}', '{enumvalue}')", conn);
 
-                return SendNonQuery(cmd);
+                    return SendNonQuery(cmd);
+                }
             }
+            return false;
+        }
+
+        private static bool IsMovieIdValid(int movieId)
+        {
+            int numberOfMovies = NumberOfRowsInTable("imdbdata");
+
+            return movieId > 0 && movieId <= numberOfMovies;
+        }
+
+        private static bool IsEnumvalueValid(string enumvalue)
+        {
+            if (enumvalue == "thumbsup" || enumvalue == "thumbsdown") return true;
+            return false;
         }
 
         public static bool IsMovieRated(int movieId)
