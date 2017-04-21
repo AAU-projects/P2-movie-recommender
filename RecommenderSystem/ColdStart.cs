@@ -11,6 +11,7 @@ namespace RecommenderSystem
     {
         public List<int> UsedNumbers = new List<int>();
         public bool _firststart = true;
+        public bool UnitTest = false;
 
         public ColdStart(string title) : base(title)
         {
@@ -30,9 +31,13 @@ namespace RecommenderSystem
             {
                 _running = false;
             }
-            else
+            else if (User.NumberOfMoviesRated < 10)
             {
                 FindUnratedMovies(10);
+            }
+
+            if (!UnitTest)
+	        {
                 this.Start();
             }
         }
