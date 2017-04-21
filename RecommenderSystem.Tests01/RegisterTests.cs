@@ -17,7 +17,7 @@ namespace RecommenderSystem.Tests
         [TestCase("lggdsado", ExpectedResult = true)]
         [TestCase("asd", ExpectedResult = true)]
         [TestCase("sad4", ExpectedResult = true)]
-        public bool ValidInputForUserRegister_GivesAstring_ReturnsIfInputIsValid(string input)
+        public bool ValidInputForUserRegister_GivesAString_ReturnsIfInputIsValid(string input)
         {
             Register registerTest = new Register();
             return registerTest.IsInputValid(input);
