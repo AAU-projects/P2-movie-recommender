@@ -32,7 +32,7 @@ namespace RecommenderSystem
 
                 if (User.NumberOfMoviesRated < 10)
                 {
-                    ColdStart coldStartMenu = new ColdStart($"Cold Start - you have rated {User.NumberOfMoviesRated} out of 10 movies", new List<int>());
+                    ColdStart coldStartMenu = new ColdStart($"Cold Start - you have rated {User.NumberOfMoviesRated} out of 10 movies");
                     coldStartMenu.Select();
                 }
                 else
