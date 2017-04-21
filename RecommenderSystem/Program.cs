@@ -15,8 +15,5 @@ namespace RecommenderSystem
             Menu menu = new Menu("Recommender System : Start", new Login(), new Register());
             menu.Start();
         }
-
-        
-
     }
 }
