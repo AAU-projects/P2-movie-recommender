@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RecommenderSystem
@@ -79,13 +80,13 @@ namespace RecommenderSystem
 
         public bool IsInputValid(string input)
         {
-            if (input.Length >= 3 && input.Any(char.IsLetterOrDigit))
+            if (input.Length >= 3 && Regex.IsMatch(input, @"^[a-zA-Z0-9]+$"))
             {
                 return true;
             }
             PrintStringColored("Input should be atleast 3 characters", ConsoleColor.Red);
             Console.WriteLine("\nPress any key to try again");
-            Console.ReadKey();
+            //Console.ReadKey();
             return false;
         }
     }
