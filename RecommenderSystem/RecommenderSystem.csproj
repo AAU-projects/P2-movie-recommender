@@ -91,6 +91,7 @@
     <Compile Include="RateMovie.cs" />
     <Compile Include="RateMovieMenu.cs" />
     <Compile Include="Register.cs" />
+    <Compile Include="ShowRatedMovies.cs" />
     <Compile Include="Startmenu.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

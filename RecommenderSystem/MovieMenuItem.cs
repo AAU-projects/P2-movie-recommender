@@ -41,7 +41,18 @@ namespace RecommenderSystem
                 Console.WriteLine(actor);
             }
 
-            Console.WriteLine();
+            string ratingForMovie = MySqlCommands.FindRatingFromMovieID(_movieID);
+
+            if (ratingForMovie != "notRated")
+            {
+                PrintStringColored($"\nYou have rated this movie: {ratingForMovie}\n", ConsoleColor.Magenta);
+            }
+            else
+            {
+                Console.WriteLine(); // new line for style
+            }
+            
+
             RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", _movieID);
             User.UpdateUser();
             rateMenu.Start();
