@@ -2161,6 +2161,11 @@
             Gets a unique string identifier for the current path
             </summary>
         </member>
+        <member name="P:Microsoft.Pex.Engine.Drivers.IPexPathDriver.PathResult">
+            <summary>
+            Gets the result of a path executions, or null if it has not been run.
+            </summary>
+        </member>
         <member name="M:Microsoft.Pex.Engine.Drivers.IPexPathDriver.Run(System.Object)">
             <summary>
             Runs an execution path.
@@ -2451,6 +2456,11 @@
             <remarks>
             This path might involve summaries.
             </remarks>
+        </member>
+        <member name="M:Microsoft.Pex.Engine.ExecutionNodes.IPexExecutionPath.GetLastDuplicatedBranchLocation(System.Nullable{Microsoft.ExtendedReflection.Metadata.CodeLocation}@)">
+            <summary>
+            Finds the last location at branch instruction that was visited several times.
+            </summary>
         </member>
         <member name="P:Microsoft.Pex.Engine.ExecutionNodes.IPexExecutionPath.IsDuplicate">
             <summary>

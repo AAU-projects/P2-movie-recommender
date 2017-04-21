@@ -13,21 +13,66 @@ namespace RecommenderSystem
         private static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         private static MySqlConnection conn = new MySqlConnection { ConnectionString = myConnectionString };
 
+        public static string FindRatingFromMovieID(int id)
+        {
+            MySqlCommand cmd = new MySqlCommand();
+            DataTable results;
+            string result = "notRated";
+
+            cmd.CommandText = $"SELECT * FROM {User.Username}_movies WHERE movieID = @id;";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Connection = conn;
+            results = SendQuery(cmd);
+
+            try
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    result = row[2].ToString();
+                }
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return result;
+            }
+        }
+
         public static bool RateMovie(int movieId, string enumvalue)
         {
-            if (IsMovieRated(movieId))
+            if (IsMovieIdValid(movieId) && IsEnumvalueValid(enumvalue))
             {
-                MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
+                if (IsMovieRated(movieId))
+                {
+                    MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
 
-                return SendNonQuery(cmd);
-            }
-            else
-            {
-                MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
-                                                    $"Values ('{movieId}', '{enumvalue}')", conn);
+                    return SendNonQuery(cmd);
+                }
+                else
+                {
+                    MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
+                                                        $"Values ('{movieId}', '{enumvalue}')", conn);
 
-                return SendNonQuery(cmd);
+                    return SendNonQuery(cmd);
+                }
             }
+            return false;
+        }
+
+        private static bool IsMovieIdValid(int movieId)
+        {
+            int numberOfMovies = NumberOfRowsInTable("imdbdata");
+
+            return movieId > 0 && movieId <= numberOfMovies;
+        }
+
+        private static bool IsEnumvalueValid(string enumvalue)
+        {
+            if (enumvalue == "thumbsup" || enumvalue == "thumbsdown") return true;
+            return false;
         }
 
         public static bool IsMovieRated(int movieId)
@@ -188,6 +233,33 @@ namespace RecommenderSystem
                 conn.Close();
             }
 
+        }
+        public static List<int> GetUserRatedMovies()
+        {
+            List<int> MovieID = new List<int>();
+
+            MySqlCommand cmd = new MySqlCommand();
+            DataTable results;
+
+            cmd.CommandText = $"SELECT * FROM {User.Username}_movies;";
+            cmd.Connection = conn;
+
+            results = SendQuery(cmd);
+
+            try
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    MovieID.Add(Convert.ToInt32(row[1]));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return MovieID;
         }
 
         private static bool SendNonQuery(MySqlCommand cmd)
