@@ -10,7 +10,7 @@ namespace RecommenderSystem
     {
         public Startmenu(string title) : base(title)
         {
-            AddMenuItem(new MovieMenu("View all movies"), new MovieMenu("Rate movies"), new ShowRatedMovies("Your rated movies"));
+            AddMenuItem(new MovieMenu("View all movies"), new MovieMenu("Rate movies"), new ShowRatedMovies("Your rated movies"), new TopGenre("Top Genres"));
         }
     }
 }
