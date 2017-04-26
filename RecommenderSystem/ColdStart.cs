@@ -37,7 +37,11 @@ namespace RecommenderSystem
             }
 
             if (!UnitTest)
+<<<<<<< HEAD
+	        {
+=======
             {
+>>>>>>> refs/remotes/origin/master
                 this.Start();
             }
         }
