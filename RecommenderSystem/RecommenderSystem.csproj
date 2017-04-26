@@ -74,9 +74,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="ColdStart.cs" />
-    <Compile Include="Director.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
@@ -85,14 +84,15 @@
     <Compile Include="MovieMenu.cs" />
     <Compile Include="MySqlCommands.cs" />
     <Compile Include="MySqlCommands2.cs" />
-    <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RateMovie.cs" />
     <Compile Include="RateMovieMenu.cs" />
+    <Compile Include="Recommender.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="ShowRatedMovies.cs" />
     <Compile Include="Startmenu.cs" />
+    <Compile Include="TopGenre.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
