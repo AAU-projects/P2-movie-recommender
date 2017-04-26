@@ -30,6 +30,13 @@ namespace RecommenderSystem
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void PrintStringColoredInLine(string input, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(input);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public void PrintTitleColored()
         {
             PrintStringColored(Title, _titleColor);
