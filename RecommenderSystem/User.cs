@@ -1,21 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RecommenderSystem
 {
-    class User : Person
+    class User
     {
-        public User(string firstName, string lastName, string userName, string password) : base(firstName, lastName)
+        public static string Username;
+        public static int NumberOfMoviesRated;
+
+        public static Dictionary<String, Dictionary<String, double[]>> preferences = new Dictionary<string, Dictionary<string, double[]>>();
+
+        public User(string userName)
         {
-            _userName = userName;
-            _password = password;
+            preferences.Clear();
+            Username = userName;
+            NumberOfMoviesRated = MySqlCommands.NumberOfRowsInTable($"{Username}_movies");
+            preferences.Add("genre", new Dictionary<string, double[]>());
         }
 
-        private string _userName;
-        private string _password;
-
+        public static void UpdateUser()
+        {
+            NumberOfMoviesRated = MySqlCommands.NumberOfRowsInTable($"{Username}_movies");
+        }
     }
 }

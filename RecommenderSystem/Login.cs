@@ -24,11 +24,28 @@ namespace RecommenderSystem
             bool success = MySqlCommands.FindUser(userName, password);
 
             if (success)
-                Console.WriteLine("You are now logged in");
-            else
-                Console.WriteLine("Wrong password or username");
+            {
+                PrintStringColored("You are now logged in", ConsoleColor.Green);
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
+                new User(userName);
 
-            Console.ReadLine();
+                if (User.NumberOfMoviesRated < 10)
+                {
+                    ColdStart coldStartMenu = new ColdStart($"Cold Start - you have rated {User.NumberOfMoviesRated} out of 10 movies");
+                    coldStartMenu.Select();
+                }
+                else
+                {
+                    Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
+                    loggedInMenu.Start();
+                }
+            }
+            else
+            {
+                PrintStringColored("Wrong password or username", ConsoleColor.Red);
+                Console.ReadLine();
+            }
         }
     }
 }

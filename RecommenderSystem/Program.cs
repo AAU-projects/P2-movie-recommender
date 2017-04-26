@@ -13,12 +13,7 @@ namespace RecommenderSystem
         static void Main(string[] args)
         {
             Menu menu = new Menu("Recommender System : Start", new Login(), new Register());
-            Console.Beep();
-
             menu.Start();
         }
-
-        
-
     }
 }
