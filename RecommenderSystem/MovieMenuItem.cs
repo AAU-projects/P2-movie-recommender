@@ -16,39 +16,45 @@ namespace RecommenderSystem
             this._duration = duration;
             this.Genre = genre;
             this._resume = resume;
-            this._director = director;
-            this._actors = actors;
+            this.Director = director;
+            this.Actors = actors;
             this.UserRating = MySqlCommands.FindRatingFromMovieID(_movieID);
         }
 
-        private int _movieID;
-        private string _releaseDate;
-        private double _rating;
-        private int _duration;
-        public string Genre;
-        private string _resume;
-        private string _director;
-        private List<string> _actors;
+        private readonly int _movieID;
+        private readonly string _releaseDate;
+        private readonly double _rating;
+        private readonly int _duration;
+        public readonly string Genre;
+        private readonly string _resume;
+        public readonly string Director;
+        public readonly List<string> Actors;
         public string UserRating;
-
+        
         public override void Select()
         {
+            UserRating = MySqlCommands.FindRatingFromMovieID(_movieID);
+
             Console.Clear();
             Console.WriteLine($"{Title}   {_releaseDate}");
             Console.WriteLine($"{Genre}");
             Console.WriteLine($"");
             Console.WriteLine($"Duration: {_duration} min");
             Console.WriteLine($"{_resume}");
-            Console.WriteLine($"Director: {_director}.");
+            Console.WriteLine($"Director: {Director}.");
             Console.WriteLine("\nLeading actors");
-            foreach (var actor in _actors)
+            foreach (var actor in Actors)
             {
                 Console.WriteLine(actor);
             }
                         
             if (UserRating != "notRated")
             {
-                PrintStringColored($"\nYou have rated this movie: {UserRating}\n", ConsoleColor.Magenta);
+                PrintStringColoredInLine($"\nYou have rated this movie: ", ConsoleColor.Magenta);
+                if (UserRating == "thumbsup")
+                    PrintStringColored("thumbs up", ConsoleColor.Green);
+                else if (UserRating == "thumbsdown")
+                    PrintStringColored("thumbs down", ConsoleColor.Red);
             }
             else
             {

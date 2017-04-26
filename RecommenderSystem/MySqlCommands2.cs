@@ -50,7 +50,7 @@ namespace RecommenderSystem
                 {
                     MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
 
-                    Recommender.Update();
+                    //Recommender.Update("genre", "actors");
                     return SendNonQuery(cmd);
                 }
                 else
@@ -58,7 +58,7 @@ namespace RecommenderSystem
                     MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
                                                         $"Values ('{movieId}', '{enumvalue}')", conn);
 
-                    Recommender.Update();
+                    //Recommender.Update("genre", "actors");
                     return SendNonQuery(cmd);
                 }                
             }
@@ -112,7 +112,10 @@ namespace RecommenderSystem
                         actors = new List<string>();
                         for (int j = 8; j < 18; j++)
                         {
-                            actors.Add(row[j].ToString());
+                            if (row[j] != null)
+                            {
+                                actors.Add(row[j].ToString());
+                            }
                         }
 
                         MovieList.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
@@ -146,7 +149,10 @@ namespace RecommenderSystem
                     actors = new List<string>();
                     for (int i = 8; i < 18; i++)
                     {
-                        actors.Add(row[i].ToString());
+                        if (row[i] != null)
+                        {
+                            actors.Add(row[i].ToString());
+                        }
                     }
 
                     allMovies.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),

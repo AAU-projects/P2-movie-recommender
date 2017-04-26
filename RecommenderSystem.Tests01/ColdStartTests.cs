@@ -21,7 +21,7 @@ namespace RecommenderSystem.Tests
             User.NumberOfMoviesRated = NumberOfMoviesRated;
             coldstart.UnitTest = true;
             coldstart.Select();
-            return coldstart._firststart;
+            return coldstart.Firststart;
         }
 
         [TestCase(1, ExpectedResult = 10)]

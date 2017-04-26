@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace RecommenderSystem
 {
-    class TopGenre : MenuItemBase
+    class TopActors : MenuItemBase
     {
-        public TopGenre(string title) : base(title)
+        public TopActors(string title) : base(title)
         {
-            //Recommender.Update("genre");
+            //Recommender.Update("actors");
         }
 
         public override void Select()
         {
-            Recommender.Update("genre");
+            Recommender.Update("actors");
             Console.Clear();
-            foreach (var genre in User.Preferences["genre"])
+            foreach (var actor in User.Preferences["actors"])
             {
-                Console.WriteLine($"{genre.Key} | {genre.Value[(int)UserRating.weight]}");
+                Console.WriteLine($"{actor.Key} | {actor.Value[(int)UserRating.weight]}");
             }
             Console.ReadLine();
         }
