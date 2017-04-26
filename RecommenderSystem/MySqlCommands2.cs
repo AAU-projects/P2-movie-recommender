@@ -50,6 +50,7 @@ namespace RecommenderSystem
                 {
                     MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
 
+                    Recommender.Update();
                     return SendNonQuery(cmd);
                 }
                 else
@@ -57,8 +58,9 @@ namespace RecommenderSystem
                     MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
                                                         $"Values ('{movieId}', '{enumvalue}')", conn);
 
+                    Recommender.Update();
                     return SendNonQuery(cmd);
-                }
+                }                
             }
             return false;
         }
@@ -114,8 +116,7 @@ namespace RecommenderSystem
                         }
 
                         MovieList.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
-                            Convert.ToDouble(row[2]), Convert.ToInt32(row[5]),
-                            row[6].ToString(), row[7].ToString(), actors));
+                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]), row[3].ToString(), row[6].ToString(), row[7].ToString(), actors));
                     }
                 }
                 catch (Exception ex)
@@ -149,8 +150,7 @@ namespace RecommenderSystem
                     }
 
                     allMovies.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
-                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]),
-                        row[6].ToString(), row[7].ToString(), actors));
+                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]), row[3].ToString(),row[6].ToString(),row[7].ToString(), actors));
                 }
 
                     return allMovies;
