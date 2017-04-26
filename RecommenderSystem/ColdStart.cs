@@ -37,7 +37,11 @@ namespace RecommenderSystem
             }
 
             if (!UnitTest)
+<<<<<<< HEAD
 	        {
+=======
+            {
+>>>>>>> refs/remotes/origin/master
                 this.Start();
             }
         }
@@ -83,7 +87,7 @@ namespace RecommenderSystem
                 usedNumbers.Add(number);
                 rateMoviesNumbers.Add(number);
             }
-            return rateMoviesNumbers; 
+            return rateMoviesNumbers;
         }
 
         public override void Start()
@@ -102,7 +106,7 @@ namespace RecommenderSystem
             {
                 Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
                 loggedInMenu.Start();
-                UsedNumbers.Add(0);                                                     
+                UsedNumbers.Add(0);
             }
         }
     }
