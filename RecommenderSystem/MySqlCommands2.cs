@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RecommenderSystem
@@ -43,19 +44,38 @@ namespace RecommenderSystem
 
         public static bool RateMovie(int movieId, string enumvalue)
         {
-            if (IsMovieRated(movieId))
+            if (IsMovieIdValid(movieId) && IsEnumvalueValid(enumvalue))
             {
-                MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
+                if (IsMovieRated(movieId))
+                {
+                    MySqlCommand cmd = new MySqlCommand($"UPDATE {User.Username}_movies SET rating = '{enumvalue}' WHERE movieID = {movieId}", conn);
 
-                return SendNonQuery(cmd);
-            }
-            else
-            {
-                MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
-                                                    $"Values ('{movieId}', '{enumvalue}')", conn);
+                    Recommender.Update();
+                    return SendNonQuery(cmd);
+                }
+                else
+                {
+                    MySqlCommand cmd = new MySqlCommand($"INSERT INTO {User.Username}_movies (movieID, rating) " +
+                                                        $"Values ('{movieId}', '{enumvalue}')", conn);
 
-                return SendNonQuery(cmd);
+                    Recommender.Update();
+                    return SendNonQuery(cmd);
+                }                
             }
+            return false;
+        }
+
+        private static bool IsMovieIdValid(int movieId)
+        {
+            int numberOfMovies = NumberOfRowsInTable("imdbdata");
+
+            return movieId > 0 && movieId <= numberOfMovies;
+        }
+
+        private static bool IsEnumvalueValid(string enumvalue)
+        {
+            if (enumvalue == "thumbsup" || enumvalue == "thumbsdown") return true;
+            return false;
         }
 
         public static bool IsMovieRated(int movieId)
@@ -96,8 +116,7 @@ namespace RecommenderSystem
                         }
 
                         MovieList.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
-                            Convert.ToDouble(row[2]), Convert.ToInt32(row[5]),
-                            row[6].ToString(), row[7].ToString(), actors));
+                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]), row[3].ToString(), row[6].ToString(), row[7].ToString(), actors));
                     }
                 }
                 catch (Exception ex)
@@ -131,8 +150,7 @@ namespace RecommenderSystem
                     }
 
                     allMovies.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
-                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]),
-                        row[6].ToString(), row[7].ToString(), actors));
+                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]), row[3].ToString(),row[6].ToString(),row[7].ToString(), actors));
                 }
 
                     return allMovies;
@@ -162,7 +180,7 @@ namespace RecommenderSystem
 
         public static bool UserExist(string userName)
         {
-            if (!userName.Any(char.IsLetterOrDigit) && userName.Length <= 3) return true;
+            if (!Regex.IsMatch(userName, @"^[a-zA-Z0-9]+$") || userName.Length < 3) return false;
 
             MySqlCommand cmd = new MySqlCommand();
             cmd.CommandText = "SELECT  count(*) FROM users WHERE Username = @username";
@@ -178,7 +196,7 @@ namespace RecommenderSystem
 
         public static bool CreateNewUser(string firstName, string lastName, string userName, string password)
         {
-            if (!userName.Any(char.IsLetterOrDigit) && userName.Length <= 3) return false;
+            if (!Regex.IsMatch(userName, @"^[a-zA-Z0-9]+$") || userName.Length < 3) return false;
 
             MySqlCommand cmd = new MySqlCommand("INSERT INTO users (Firstname, Lastname, Username, Password) " +
                                                     "Values ('" + firstName + "', '" + lastName + "', '" + userName +
@@ -195,7 +213,7 @@ namespace RecommenderSystem
             return SendNonQuery(cmd);
         }
 
-        public static int NumberOfRowsInTable(string table)
+        public static int NumberOfRowsInTable(string table) //Note: Mangler Unittest
         {
             try
             {
@@ -217,6 +235,7 @@ namespace RecommenderSystem
             }
 
         }
+
         public static List<int> GetUserRatedMovies()
         {
             List<int> MovieID = new List<int>();
