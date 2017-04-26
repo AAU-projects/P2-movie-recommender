@@ -1,57 +1,21 @@
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.pdb
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.Reasoning.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.pdb
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.xml
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
-C:\Users\mobil\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.pdb
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.dll
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.dll
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.Reasoning.dll
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.dll
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.pdb
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.xml
-C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.pdb
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.Reasoning.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.pdb
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe.config
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.xml
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
-C:\Users\Lasse Lundbo\Documents\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.pdb
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.Reasoning.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.pdb
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe.config
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.xml
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
-D:\GitHub\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll.config
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.pdb
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.SqlServer.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.Entity.EF6.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.Reasoning.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.ExtendedReflection.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.pdb
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe.config
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.xml
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.SqlServer.xml
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\Microsoft.Pex.Framework.xml
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
+E:\Github\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
