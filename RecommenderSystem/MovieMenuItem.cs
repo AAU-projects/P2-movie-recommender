@@ -21,7 +21,7 @@ namespace RecommenderSystem
             this.UserRating = MySqlCommands.FindRatingFromMovieID(_movieID);
         }
 
-        private readonly int _movieID;
+        public readonly int _movieID;
         private readonly string _releaseDate;
         private readonly double _rating;
         private readonly int _duration;

@@ -96,7 +96,7 @@ namespace RecommenderSystem
             {
                 HandleInput();
                 UpdateTitle();
-            } while (_running && User.NumberOfMoviesRated < 10 && UsedNumbers.Count / 10 + 1 <= 3);
+            } while (_running && User.NumberOfMoviesRated < 10 && UsedNumbers.Count / 10 + 1 <= 20);
 
             if (User.NumberOfMoviesRated >= 10 && UsedNumbers.Count % 10 == 0) // makes sure that only one startpage is created, a bool could maybe be created with a adress pointer to each class instead?
             {

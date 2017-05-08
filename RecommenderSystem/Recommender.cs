@@ -10,6 +10,7 @@ namespace RecommenderSystem
     {
         private static List<int> _movieIDs = new List<int>();
         private static List<MovieMenuItem> _moviesRated = new List<MovieMenuItem>();
+        public static IEnumerable<KeyValuePair<MovieMenuItem, double>> movieRatingsWeight = new Dictionary<MovieMenuItem, double>();
 
         private const int ThumbsUpRating = 1;
         private const int ThumbsDownRating = 0;
@@ -21,6 +22,53 @@ namespace RecommenderSystem
 
             FindType(items);
         }
+
+        public static List<MovieMenuItem> GetRecommendedMovies()
+        {
+            Dictionary<MovieMenuItem, double> LocalmovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
+            movieRatingsWeight = new Dictionary<MovieMenuItem, double>();
+
+            Console.Clear();
+            Console.WriteLine("Caculating...");
+            Update("genre", "directors", "actors");
+            List<MovieMenuItem> allMovies = MySqlCommands.GetMovies();
+
+            foreach (var movie in allMovies)
+            {
+                if (!MySqlCommands.IsMovieRated(movie._movieID))
+                {
+                    double movieWeight = 0;
+                    if (User.Preferences["directors"].ContainsKey(movie.Director))                                  // weight for directors
+                    {
+                        movieWeight += User.Preferences["directors"][movie.Director][(int)UserRating.weight];
+                    }
+
+                    string[] genres = movie.Genre.Replace(" ", "").Split(',');                                       // weight for genres
+                    foreach (var genre in genres)
+                    {
+                        if (User.Preferences["genre"].ContainsKey(genre))
+                        {
+                            movieWeight += User.Preferences["genre"][genre][(int)UserRating.weight];
+                        }
+                    }
+
+                    foreach (var actor in movie.Actors)
+                    {
+                        if (User.Preferences["actors"].ContainsKey(actor))
+                        {
+                            movieWeight += User.Preferences["actors"][actor][(int)UserRating.weight];
+                        }
+                    }
+
+                    LocalmovieRatingsWeight.Add(movie, movieWeight);
+                }
+            }
+
+            movieRatingsWeight = LocalmovieRatingsWeight.OrderByDescending(m => m.Value);
+            Console.Clear();
+            return allMovies;
+        }
+
 
         private static void FindType(params string[] types)
         {

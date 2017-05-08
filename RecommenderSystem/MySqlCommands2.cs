@@ -14,6 +14,43 @@ namespace RecommenderSystem
         private static string myConnectionString = "server=90.185.187.114;uid=program;pwd=123;database=recommender_system;";
         private static MySqlConnection conn = new MySqlConnection { ConnectionString = myConnectionString };
 
+
+        public static List<MovieMenuItem> FindMovieByGenre(List<string> genre)
+        {
+            List<MovieMenuItem> genreMovies = new List<MovieMenuItem>();
+            MySqlCommand cmd = new MySqlCommand();
+            DataTable results;
+
+            cmd.CommandText = $"SELECT * FROM imdbdata WHERE Genre LIKE '%{genre[0]}%' OR Genre LIKE '%{genre[1]}%' OR Genre LIKE '%{genre[2]}%'";
+            cmd.Connection = conn;
+
+            results = SendQuery(cmd);
+
+            try
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    var actors = new List<string>();
+                    for (int j = 8; j < 18; j++)
+                    {
+                        if (row[j] != null)
+                        {
+                            actors.Add(row[j].ToString());
+                        }
+                    }
+
+                    genreMovies.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
+                    Convert.ToDouble(row[2]), Convert.ToInt32(row[5]), row[3].ToString(), row[6].ToString(), row[7].ToString(), actors));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return genreMovies;
+        } 
+
         public static string FindRatingFromMovieID(int id)
         {
             MySqlCommand cmd = new MySqlCommand();
