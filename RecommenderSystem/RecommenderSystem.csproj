@@ -92,6 +92,8 @@
     <Compile Include="Register.cs" />
     <Compile Include="ShowRatedMovies.cs" />
     <Compile Include="Startmenu.cs" />
+    <Compile Include="TopActors.cs" />
+    <Compile Include="TopDirector.cs" />
     <Compile Include="TopGenre.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

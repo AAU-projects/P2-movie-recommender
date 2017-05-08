@@ -8,63 +8,79 @@ namespace RecommenderSystem
 {
     static class Recommender
     {
-        private static List<int> movieIDs = new List<int>();
-        private static List<MovieMenuItem> moviesRated = new List<MovieMenuItem>();
+        private static List<int> _movieIDs = new List<int>();
+        private static List<MovieMenuItem> _moviesRated = new List<MovieMenuItem>();
 
-        private static int _thumbsUpRating = 1;
-        private static int _thumbsDownRating = 0;
+        private const int ThumbsUpRating = 1;
+        private const int ThumbsDownRating = 0;
 
-        public static void Update()
+        public static void Update(params string[] items)
         {
-            movieIDs = MySqlCommands.GetUserRatedMovies();
-            moviesRated = MySqlCommands.FindMovieFromID(movieIDs);
+            _movieIDs = MySqlCommands.GetUserRatedMovies();
+            _moviesRated = MySqlCommands.FindMovieFromID(_movieIDs);
 
-            FindGenres();
-            CalculateGenreWeight();
-            SortByWeight();
+            FindType(items);
         }
 
-        private static void FindGenres()
+        private static void FindType(params string[] types)
         {
-            foreach (var movie in moviesRated)
+            foreach (string type in types)
             {
-                int genreRating = movie.UserRating == "thumbsup" ? _thumbsUpRating : _thumbsDownRating;
-                string[] genres = movie.Genre.Replace(" ", "").Split(',');
-
-                foreach (var genre in genres)
+                User.Preferences[type].Clear();
+                foreach (var movie in _moviesRated)
                 {
-                    if (User.preferences["genre"].ContainsKey(genre))
+                    int movieRating = movie.UserRating == "thumbsup" ? ThumbsUpRating : ThumbsDownRating;
+                    List<string> itemList = new List<string>();
+
+                    if (type == "genre")
                     {
-                        User.preferences["genre"][genre][(int)UserRating.thumbs_ups] += genreRating;     //Store the thumbs up
-                        User.preferences["genre"][genre][(int)UserRating.total_rated] += 1;               //Stores the number of movies rated
-                    }  
-                    else
-                        User.preferences["genre"].Add(genre, new double[] {genreRating, 1, 0});
+                        itemList = movie.Genre.Replace(" ", "").Split(',').ToList();
+                    }
+                    else if (type == "actors")
+                    {
+                        itemList = movie.Actors;
+                    }
+                    else if (type == "directors")
+                    {
+                        itemList.Add(movie.Director);
+                    }
+
+                    foreach (var item in itemList)
+                    {
+                        if (User.Preferences[type].ContainsKey(item))
+                        {
+                            User.Preferences[type][item][(int)UserRating.thumbs_ups] += movieRating;     //Store the thumbs up
+                            User.Preferences[type][item][(int)UserRating.total_rated] += 1;               //Stores the number of movies rated
+                        }
+                        else
+                            User.Preferences[type].Add(item, new double[] { movieRating, 1, 0 });
+                    }
                 }
-            }
-        }
-        private static void CalculateGenreWeight()
-        {
-            double thumbsUpGenre;
-            double numberOfMoviesRatedGenre;
 
-            foreach (var genre in User.preferences["genre"])
-            {
-                thumbsUpGenre = genre.Value[(int)UserRating.thumbs_ups];
-                numberOfMoviesRatedGenre = genre.Value[(int)UserRating.total_rated];
-
-                 genre.Value[(int)UserRating.weight] = thumbsUpGenre / User.NumberOfMoviesRated / numberOfMoviesRatedGenre * thumbsUpGenre;
+                CalculateWeight(type);
+                SortByWeight(type);
             }
         }
 
-        private static void SortByWeight()
+        private static void CalculateWeight(string type)
         {
-            List<KeyValuePair<string, double[]>> bob = User.preferences["genre"].OrderByDescending(x => x.Value[(int)UserRating.weight]).ToList();
-            User.preferences["genre"].Clear();      //Deletes content of dict genre
-
-            foreach (var item in bob)               //Adds our new values
+            foreach (var item in User.Preferences[type])
             {
-                User.preferences["genre"].Add(item.Key, item.Value);
+                double thumbsUps = item.Value[(int)UserRating.thumbs_ups];
+                double numberOfMoviesRated = item.Value[(int)UserRating.total_rated];
+
+                item.Value[(int)UserRating.weight] = thumbsUps / User.NumberOfMoviesRated / numberOfMoviesRated * thumbsUps;
+            }
+        }
+
+        private static void SortByWeight(string type)
+        {
+            List<KeyValuePair<string, double[]>> sortedList = User.Preferences[type].OrderByDescending(x => x.Value[(int)UserRating.weight]).ToList();
+            User.Preferences[type].Clear();      //Deletes content of dict genre
+
+            foreach (var item in sortedList)        //Adds our new values
+            {
+                User.Preferences[type].Add(item.Key, item.Value);
             }
         }
 
