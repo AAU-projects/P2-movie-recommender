@@ -10,7 +10,7 @@ namespace RecommenderSystem
     {
         private static List<int> _movieIDs = new List<int>();
         private static List<MovieMenuItem> _moviesRated = new List<MovieMenuItem>();
-        public static IEnumerable<KeyValuePair<MovieMenuItem, double>> movieRatingsWeight = new Dictionary<MovieMenuItem, double>();
+        public static IEnumerable<KeyValuePair<MovieMenuItem, double>> MovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
 
         private const int ThumbsUpRating = 1;
         private const int ThumbsDownRating = 0;
@@ -18,15 +18,15 @@ namespace RecommenderSystem
         public static void Update(params string[] items)
         {
             _movieIDs = MySqlCommands.GetUserRatedMovies();
-            _moviesRated = MySqlCommands.FindMovieFromID(_movieIDs);
+            _moviesRated = MySqlCommands.FindMovieFromId(_movieIDs);
 
             FindType(items);
         }
 
         public static List<MovieMenuItem> GetRecommendedMovies()
         {
-            Dictionary<MovieMenuItem, double> LocalmovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
-            movieRatingsWeight = new Dictionary<MovieMenuItem, double>();
+            Dictionary<MovieMenuItem, double> localmovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
+            MovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
 
             Console.Clear();
             Console.WriteLine("Caculating...");
@@ -35,20 +35,35 @@ namespace RecommenderSystem
 
             foreach (var movie in allMovies)
             {
-                if (!MySqlCommands.IsMovieRated(movie._movieID))
+                if (!MySqlCommands.IsMovieRated(movie.MovieId))
                 {
                     double movieWeight = 0;
+
                     if (User.Preferences["directors"].ContainsKey(movie.Director))                                  // weight for directors
                     {
-                        movieWeight += User.Preferences["directors"][movie.Director][(int)UserRating.weight];
+                        movieWeight += User.Preferences["directors"][movie.Director][(int)UserRating.Weight];
                     }
-
+         
                     string[] genres = movie.Genre.Replace(" ", "").Split(',');                                       // weight for genres
+                    string topGenre = User.Preferences["genre"].Keys.FirstOrDefault(g => genres.Contains(g));
+                    int numberOfGenres = genres.Length;
+
                     foreach (var genre in genres)
                     {
-                        if (User.Preferences["genre"].ContainsKey(genre))
+                        try
                         {
-                            movieWeight += User.Preferences["genre"][genre][(int)UserRating.weight];
+                            if (topGenre == genre)
+                            {
+                                movieWeight += User.Preferences["genre"][genre][(int)UserRating.Weight];
+                            }
+                            else
+                            {
+                                movieWeight += User.Preferences["genre"][genre][(int)UserRating.Weight]/numberOfGenres;
+                            }
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            movieWeight += 0;
                         }
                     }
 
@@ -56,16 +71,17 @@ namespace RecommenderSystem
                     {
                         if (User.Preferences["actors"].ContainsKey(actor))
                         {
-                            movieWeight += User.Preferences["actors"][actor][(int)UserRating.weight];
+                            movieWeight += User.Preferences["actors"][actor][(int)UserRating.Weight];
                         }
                     }
 
-                    LocalmovieRatingsWeight.Add(movie, movieWeight);
+                    localmovieRatingsWeight.Add(movie, movieWeight);
                 }
             }
 
-            movieRatingsWeight = LocalmovieRatingsWeight.OrderByDescending(m => m.Value);
+            MovieRatingsWeight = localmovieRatingsWeight.OrderByDescending(m => m.Value);
             Console.Clear();
+
             return allMovies;
         }
 
@@ -75,6 +91,7 @@ namespace RecommenderSystem
             foreach (string type in types)
             {
                 User.Preferences[type].Clear();
+
                 foreach (var movie in _moviesRated)
                 {
                     int movieRating = movie.UserRating == "thumbsup" ? ThumbsUpRating : ThumbsDownRating;
@@ -97,11 +114,13 @@ namespace RecommenderSystem
                     {
                         if (User.Preferences[type].ContainsKey(item))
                         {
-                            User.Preferences[type][item][(int)UserRating.thumbs_ups] += movieRating;     //Store the thumbs up
-                            User.Preferences[type][item][(int)UserRating.total_rated] += 1;               //Stores the number of movies rated
+                            User.Preferences[type][item][(int) UserRating.ThumbsUps] += movieRating;        //Store the thumbs up
+                            User.Preferences[type][item][(int) UserRating.TotalRated] += 1;                 //Stores the number of movies rated
                         }
                         else
+                        {
                             User.Preferences[type].Add(item, new double[] { movieRating, 1, 0 });
+                        }      
                     }
                 }
 
@@ -114,16 +133,16 @@ namespace RecommenderSystem
         {
             foreach (var item in User.Preferences[type])
             {
-                double thumbsUps = item.Value[(int)UserRating.thumbs_ups];
-                double numberOfMoviesRated = item.Value[(int)UserRating.total_rated];
+                double thumbsUps = item.Value[(int)UserRating.ThumbsUps];
+                double numberOfMoviesRated = item.Value[(int)UserRating.TotalRated];
 
-                item.Value[(int)UserRating.weight] = thumbsUps / User.NumberOfMoviesRated / numberOfMoviesRated * thumbsUps;
+                item.Value[(int)UserRating.Weight] = thumbsUps / User.NumberOfMoviesRated / numberOfMoviesRated * thumbsUps;
             }
         }
 
         private static void SortByWeight(string type)
         {
-            List<KeyValuePair<string, double[]>> sortedList = User.Preferences[type].OrderByDescending(x => x.Value[(int)UserRating.weight]).ToList();
+            List<KeyValuePair<string, double[]>> sortedList = User.Preferences[type].OrderByDescending(x => x.Value[(int)UserRating.Weight]).ToList();
             User.Preferences[type].Clear();      //Deletes content of dict genre
 
             foreach (var item in sortedList)        //Adds our new values

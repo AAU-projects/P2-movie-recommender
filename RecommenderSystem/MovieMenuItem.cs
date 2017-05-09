@@ -8,20 +8,7 @@ namespace RecommenderSystem
 {
     class MovieMenuItem : MenuItemBase
     {
-        public MovieMenuItem(int movieID, string title, string releaseDate, double rating, int duration, string genre, string resume, string director, List<string> actors) : base(title)
-        {
-            this._movieID = movieID;
-            this._releaseDate = releaseDate;
-            this._rating = rating;
-            this._duration = duration;
-            this.Genre = genre;
-            this._resume = resume;
-            this.Director = director;
-            this.Actors = actors;
-            this.UserRating = MySqlCommands.FindRatingFromMovieID(_movieID);
-        }
-
-        public readonly int _movieID;
+        public readonly int MovieId;
         private readonly string _releaseDate;
         private readonly double _rating;
         private readonly int _duration;
@@ -30,12 +17,26 @@ namespace RecommenderSystem
         public readonly string Director;
         public readonly List<string> Actors;
         public string UserRating;
+
+        public MovieMenuItem(int movieId, string title, string releaseDate, double rating, int duration, string genre, string resume, string director, List<string> actors) : base(title)
+        {
+            this.MovieId = movieId;
+            this._releaseDate = releaseDate;
+            this._rating = rating;
+            this._duration = duration;
+            this.Genre = genre;
+            this._resume = resume;
+            this.Director = director;
+            this.Actors = actors;
+            this.UserRating = MySqlCommands.FindRatingFromMovieId(MovieId);
+        }
         
         public override void Select()
         {
-            UserRating = MySqlCommands.FindRatingFromMovieID(_movieID);
+            UserRating = MySqlCommands.FindRatingFromMovieId(MovieId);
 
             Console.Clear();
+
             Console.WriteLine($"{Title}   {_releaseDate}");
             Console.WriteLine($"{Genre}");
             Console.WriteLine($"");
@@ -43,6 +44,7 @@ namespace RecommenderSystem
             Console.WriteLine($"{_resume}");
             Console.WriteLine($"Director: {Director}.");
             Console.WriteLine("\nLeading actors");
+
             foreach (var actor in Actors)
             {
                 Console.WriteLine(actor);
@@ -55,14 +57,16 @@ namespace RecommenderSystem
                     PrintStringColored("thumbs up", ConsoleColor.Green);
                 else if (UserRating == "thumbsdown")
                     PrintStringColored("thumbs down", ConsoleColor.Red);
+                Console.WriteLine($"\nothers have rated this movie {_rating } on IMDB");
             }
             else
             {
                 Console.WriteLine(); // new line for style
             }
             
-            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", _movieID);
+            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", MovieId);
             User.UpdateUser();
+
             rateMenu.Start();
         }
     }

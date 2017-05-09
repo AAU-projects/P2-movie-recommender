@@ -83,7 +83,6 @@
     <Compile Include="MovieMenuItem.cs" />
     <Compile Include="MovieMenu.cs" />
     <Compile Include="MySqlCommands.cs" />
-    <Compile Include="MySqlCommands2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RateMovie.cs" />

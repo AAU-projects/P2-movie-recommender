@@ -9,7 +9,6 @@ namespace RecommenderSystem
 {
     class RecommendedMovies : Menu
     {
-        private IEnumerable<KeyValuePair<MovieMenuItem, double>> recommendender = new KeyValuePair<MovieMenuItem, double>[0];
         public RecommendedMovies(string title) : base(title)
         {
         }
@@ -20,12 +19,14 @@ namespace RecommenderSystem
 
         public override void Select()
         {
-            _menuItems.Clear();
+            MenuItems.Clear();
             Recommender.GetRecommendedMovies();
-            foreach (var movie in Recommender.movieRatingsWeight.Take(10))
+
+            foreach (var movie in Recommender.MovieRatingsWeight.Take(10))
             {
                 AddMenuItem(movie.Key);
             }
+
             base.Select();
         }
     }
