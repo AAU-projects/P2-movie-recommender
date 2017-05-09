@@ -11,7 +11,6 @@ namespace RecommenderSystem
     {
         public static string Username;
         public static int NumberOfMoviesRated;
-
         public static Dictionary<String, Dictionary<String, double[]>> Preferences = new Dictionary<string, Dictionary<string, double[]>>();
 
         public User(string userName)
