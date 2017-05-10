@@ -15,13 +15,13 @@ namespace RecommenderSystem.Tests
         [TestCase(0, ExpectedResult = false)]
         [TestCase(22, ExpectedResult = true)]
         [TestCase(10, ExpectedResult = true)]
-        public bool Select_IfNumberOfMoviesRatedForTheUserIsAboveOrEqualToTen_StopMenu(int NumberOfMoviesRated)
+        public bool Select_IfNumberOfMoviesRatedForTheUserIsAboveOrEqualToTen_StopMenu(int numberOfMoviesRated)
         {
             ColdStart coldstart = new ColdStart("");
-            User.NumberOfMoviesRated = NumberOfMoviesRated;
+            User.NumberOfMoviesRated = numberOfMoviesRated;
             coldstart.UnitTest = true;
             coldstart.Select();
-            return coldstart._firststart;
+            return coldstart.Firststart;
         }
 
         [TestCase(1, ExpectedResult = 10)]

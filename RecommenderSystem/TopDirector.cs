@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace RecommenderSystem
 {
-    class TopGenre : MenuItemBase
+    class TopDirector : MenuItemBase
     {
-        public TopGenre(string title) : base(title)
+        public TopDirector(string title) : base(title)
         { }
 
         public override void Select()
         {
-            Recommender.Update("genre");
+            Recommender.Update("directors");
             Console.Clear();
 
-            foreach (var genre in User.Preferences["genre"])
+            foreach (var director in User.Preferences["directors"])
             {
-                Console.WriteLine($"{genre.Key} | {genre.Value[(int)UserRating.Weight]}");
+                Console.WriteLine($"{director.Key} | {director.Value[(int)UserRating.Weight]}");
             }
 
             Console.ReadKey();
