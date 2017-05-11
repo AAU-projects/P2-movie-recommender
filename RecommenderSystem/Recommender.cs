@@ -19,7 +19,7 @@ namespace RecommenderSystem
         public static void Update(params string[] items)
         {
             _movieIDs = MySqlCommands.GetUserRatedMovies();
-            _moviesRated = MySqlCommands.FindMovieFromId(_movieIDs);
+            _moviesRated = Movies.GetMoviesByID(_movieIDs);
 
             FindType(items);
         }
