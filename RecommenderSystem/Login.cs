@@ -15,19 +15,21 @@ namespace RecommenderSystem
         public override void Select()
         {
             Console.Clear();
+
             Console.Write("Username: ");
             string userName = Console.ReadLine();
+
             Console.Write("Password: ");
             string password = Console.ReadLine();
-            Console.WriteLine();
 
             bool success = MySqlCommands.FindUser(userName, password);
 
             if (success)
             {
-                PrintStringColored("You are now logged in", ConsoleColor.Green);
+                PrintStringColored("\nYou are now logged in", ConsoleColor.Green);
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey();
+
                 new User(userName);
 
                 if (User.NumberOfMoviesRated < 10)
@@ -43,8 +45,8 @@ namespace RecommenderSystem
             }
             else
             {
-                PrintStringColored("Wrong password or username", ConsoleColor.Red);
-                Console.ReadLine();
+                PrintStringColored("\nWrong password or username", ConsoleColor.Red);
+                Console.ReadKey();
             }
         }
     }
