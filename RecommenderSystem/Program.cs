@@ -12,7 +12,6 @@ namespace RecommenderSystem
     {
         static void Main(string[] args)
         {
-            Movies.LoadAllMovies();
             Menu menu = new Menu("Recommender System : Start", new Login(), new Register());
 
             menu.Start();
