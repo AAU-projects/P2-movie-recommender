@@ -56,7 +56,7 @@ namespace RecommenderSystem
 
                 rateMoviesNumbers.Clear();
                 rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, UsedNumbers));
-                List<MovieMenuItem> moviesColdStart = Movies.GetMoviesByID(rateMoviesNumbers);
+                List<MovieMenuItem> moviesColdStart = MySqlCommands.FindMovieFromId(rateMoviesNumbers);
 
                 foreach (var movieMenuItem in moviesColdStart)
                 {
