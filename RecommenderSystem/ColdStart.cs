@@ -10,7 +10,7 @@ namespace RecommenderSystem
     class ColdStart : Menu
     {
         public List<int> UsedNumbers = new List<int>();
-        public bool _firststart = true;
+        public bool Firststart = true;
         public bool UnitTest = false;
 
         public ColdStart(string title) : base(title)
@@ -49,7 +49,7 @@ namespace RecommenderSystem
 
         private void FindUnratedMovies(int numberOfMovies)
         {
-            if (_firststart)
+            if (Firststart)
             {
                 List<int> rateMoviesNumbers = new List<int>();
                 int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
@@ -63,7 +63,7 @@ namespace RecommenderSystem
                 }
                 ColdStart nextPage = new ColdStart($"--- Page {UsedNumbers.Count / 10 + 1} ---", UsedNumbers);
                 AddMenuItem(nextPage);
-                _firststart = false;
+                Firststart = false;
             }
             Console.Clear();
         }
@@ -96,13 +96,21 @@ namespace RecommenderSystem
             {
                 HandleInput();
                 UpdateTitle();
-            } while (_running && User.NumberOfMoviesRated < 10);
+            } while (_running && User.NumberOfMoviesRated < 10 && UsedNumbers.Count / 10 + 1 <= 3);
 
             if (User.NumberOfMoviesRated >= 10 && UsedNumbers.Count % 10 == 0) // makes sure that only one startpage is created, a bool could maybe be created with a adress pointer to each class instead?
             {
                 Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
                 loggedInMenu.Start();
                 UsedNumbers.Add(0);
+            }
+            else if (UsedNumbers.Count % 10 == 0)
+            {
+                Console.Clear();
+                PrintStringColored("ERROR: You need to rate 10 movies for the system to work", ConsoleColor.Red);
+                Console.WriteLine("\nPress any key to continue");
+                UsedNumbers.Add(0);
+                Console.ReadKey();
             }
         }
     }
