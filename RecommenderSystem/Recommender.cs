@@ -19,22 +19,21 @@ namespace RecommenderSystem
         public static void Update(params string[] items)
         {
             _movieIDs = MySqlCommands.GetUserRatedMovies();
-            _moviesRated = MySqlCommands.FindMovieFromId(_movieIDs);
+            _moviesRated = Movies.GetMoviesByID(_movieIDs);
 
             FindType(items);
         }
 
-        public static List<MovieMenuItem> GetRecommendedMovies()
+        public static void GetRecommendedMovies()
         {
             Dictionary<MovieMenuItem, double> localmovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
             MovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
-            List<MovieMenuItem> allMovies = MySqlCommands.GetMovies();
             
             Console.Clear();
             Console.WriteLine("Caculating...");
             Update("genre", "directors", "actors");
 
-            foreach (var movie in allMovies)
+            foreach (var movie in Movies.AllMovies)
             {
                 if (!MySqlCommands.IsMovieRated(movie.MovieId))
                 {
@@ -82,8 +81,6 @@ namespace RecommenderSystem
 
             MovieRatingsWeight = localmovieRatingsWeight.OrderByDescending(m => m.Value);
             Console.Clear();
-
-            return allMovies;
         }
 
 
