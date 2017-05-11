@@ -9,19 +9,19 @@ namespace RecommenderSystem
     class TopDirector : MenuItemBase
     {
         public TopDirector(string title) : base(title)
-        {
-            //Recommender.Update("directors");
-        }
+        { }
 
         public override void Select()
         {
             Recommender.Update("directors");
             Console.Clear();
+
             foreach (var director in User.Preferences["directors"])
             {
-                Console.WriteLine($"{director.Key} | {director.Value[(int)UserRating.weight]}");
+                Console.WriteLine($"{director.Key} | {director.Value[(int)UserRating.Weight]}");
             }
-            Console.ReadLine();
+
+            Console.ReadKey();
         }
     }
 }

@@ -8,10 +8,10 @@ namespace RecommenderSystem
 {
     class MovieMenu : Menu
     {
+        private bool _firstRun = true;
+
         public MovieMenu(string title) : base(title)
         { }
-
-        private bool _firstRun = true;
 
         public override void Select()
         {

@@ -9,19 +9,19 @@ namespace RecommenderSystem
     class TopGenre : MenuItemBase
     {
         public TopGenre(string title) : base(title)
-        {
-            //Recommender.Update("genre");
-        }
+        { }
 
         public override void Select()
         {
             Recommender.Update("genre");
             Console.Clear();
+
             foreach (var genre in User.Preferences["genre"])
             {
-                Console.WriteLine($"{genre.Key} | {genre.Value[(int)UserRating.weight]}");
+                Console.WriteLine($"{genre.Key} | {genre.Value[(int)UserRating.Weight]}");
             }
-            Console.ReadLine();
+
+            Console.ReadKey();
         }
     }
 }

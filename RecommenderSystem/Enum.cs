@@ -8,8 +8,8 @@ namespace RecommenderSystem
 {
     public enum UserRating
     {
-        thumbs_ups = 0,
-        total_rated = 1,
-        weight = 2
+        ThumbsUps = 0,
+        TotalRated = 1,
+        Weight = 2
     }
 }

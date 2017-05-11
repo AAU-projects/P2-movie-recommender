@@ -8,7 +8,9 @@ namespace RecommenderSystem
 {
     abstract class MenuItemBase
     {
-        public MenuItemBase(string title)
+        protected ConsoleColor TitleColor;
+
+        protected MenuItemBase(string title)
         {
             this.Title = title;
         }
@@ -16,12 +18,12 @@ namespace RecommenderSystem
         protected MenuItemBase(string title, ConsoleColor color)
         {
             this.Title = title;
-            this._titleColor = color;
+            this.TitleColor = color;
         }
 
         public virtual string Title { get; set; }
+
         public abstract void Select();
-        protected ConsoleColor _titleColor;
 
         public void PrintStringColored(string input, ConsoleColor color)
         {
@@ -39,7 +41,7 @@ namespace RecommenderSystem
 
         public void PrintTitleColored()
         {
-            PrintStringColored(Title, _titleColor);
+            PrintStringColored(Title, TitleColor);
         }
     }
 }
