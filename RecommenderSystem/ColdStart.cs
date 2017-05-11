@@ -9,8 +9,8 @@ namespace RecommenderSystem
 {
     class ColdStart : Menu
     {
-        public List<int> UsedNumbers = new List<int>();
-        public bool _firststart = true;
+        public List<int> UsedNumbers;
+        public bool Firststart = true;
         public bool UnitTest = false;
 
         public ColdStart(string title) : base(title)
@@ -29,7 +29,7 @@ namespace RecommenderSystem
 
             if (User.NumberOfMoviesRated >= 10)
             {
-                _running = false;
+                Running = false;
             }
             else if (User.NumberOfMoviesRated < 10)
             {
@@ -49,22 +49,26 @@ namespace RecommenderSystem
 
         private void FindUnratedMovies(int numberOfMovies)
         {
-            if (_firststart)
+            if (Firststart)
             {
                 List<int> rateMoviesNumbers = new List<int>();
                 int totalNumberOfMovies = MySqlCommands.NumberOfRowsInTable("imdbdata");
 
                 rateMoviesNumbers.Clear();
                 rateMoviesNumbers.AddRange(GenerateRandomNumber(totalNumberOfMovies, numberOfMovies, UsedNumbers));
-                List<MovieMenuItem> MoviesColdStart = MySqlCommands.FindMovieFromID(rateMoviesNumbers);
-                foreach (var movieMenuItem in MoviesColdStart)
+                List<MovieMenuItem> moviesColdStart = MySqlCommands.FindMovieFromId(rateMoviesNumbers);
+
+                foreach (var movieMenuItem in moviesColdStart)
                 {
                     AddMenuItem(movieMenuItem);
                 }
+
                 ColdStart nextPage = new ColdStart($"--- Page {UsedNumbers.Count / 10 + 1} ---", UsedNumbers);
                 AddMenuItem(nextPage);
-                _firststart = false;
+
+                Firststart = false;
             }
+
             Console.Clear();
         }
 
@@ -72,37 +76,49 @@ namespace RecommenderSystem
         {
             List<int> rateMoviesNumbers = new List<int>();
             Random random = new Random();
-            int number = 0;
 
             for (int i = 0; i < numberOfGeneratedNumbers; i++)
             {
+                int number;
                 do
                 {
                     number = random.Next(1, totalNumberOfMovies);
                 } while (usedNumbers.Contains(number));
+
                 usedNumbers.Add(number);
                 rateMoviesNumbers.Add(number);
             }
+
             return rateMoviesNumbers;
         }
 
         public override void Start()
         {
-            _running = true;
+            Running = true;
             Console.CursorVisible = false;
             Console.ForegroundColor = ConsoleColor.Black;
+
             DrawMenu();
             do
             {
                 HandleInput();
                 UpdateTitle();
-            } while (_running && User.NumberOfMoviesRated < 10);
+            } while (Running && User.NumberOfMoviesRated < 10 && UsedNumbers.Count / 10 + 1 <= 20);
 
             if (User.NumberOfMoviesRated >= 10 && UsedNumbers.Count % 10 == 0) // makes sure that only one startpage is created, a bool could maybe be created with a adress pointer to each class instead?
             {
                 Menu loggedInMenu = new Startmenu($"Welcome {User.Username}!");
+
                 loggedInMenu.Start();
                 UsedNumbers.Add(0);
+            }
+            else if (UsedNumbers.Count % 10 == 0)
+            {
+                Console.Clear();
+                PrintStringColored("ERROR: You need to rate 10 movies for the system to work", ConsoleColor.Red);
+                Console.WriteLine("\nPress any key to continue");
+                UsedNumbers.Add(0);
+                Console.ReadKey();
             }
         }
     }

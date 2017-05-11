@@ -11,7 +11,6 @@ namespace RecommenderSystem
 {
     class Register : MenuItemBase
     {
-        // Gør så firstname og lastname altid er med stort forbogstav
         public Register() : base("Create New User")
         {
         }
@@ -19,24 +18,23 @@ namespace RecommenderSystem
         public override void Select()
         {
             bool success = false;
-            string firstName, lastName, userName, password;
+            string firstname, lastname, username, password;
 
-            Console.Clear();
             do
             {
                 Console.Clear();
                 Console.Write("Firstname: ");
-                firstName = Console.ReadLine();
-                firstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(firstName.ToLower());
-            } while (!IsInputValid(firstName));
+                firstname = Console.ReadLine();
+                firstname = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(firstname.ToLower());
+            } while (!IsInputValid(firstname));
 
             do
             {
                 Console.Clear();
                 Console.Write("Lastname: ");
-                lastName = Console.ReadLine();
-                lastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lastName.ToLower());
-            } while (!IsInputValid(lastName));
+                lastname = Console.ReadLine();
+                lastname = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lastname.ToLower());
+            } while (!IsInputValid(lastname));
 
             do
             {
@@ -44,37 +42,34 @@ namespace RecommenderSystem
                 {
                     Console.Clear();
                     Console.Write("Username: ");
-                    userName = Console.ReadLine();
-                } while (!IsInputValid(userName));
+                    username = Console.ReadLine();
+                } while (!IsInputValid(username));
 
                 do
                 {
                     Console.Clear();
-
                     Console.Write("Password: ");
                     password = Console.ReadLine();
                 } while (!IsInputValid(password));
 
-
-                Console.WriteLine();
-                if (MySqlCommands.UserExist(userName))
+                if (MySqlCommands.UserExist(username))
                 {
-                    PrintStringColored("Username is already taken!", ConsoleColor.Red);
+                    PrintStringColored("\nUsername is already taken!", ConsoleColor.Red);
                 }
                 else
                 {
-                    success = MySqlCommands.CreateNewUser(firstName, lastName, userName, password);
+                    success = MySqlCommands.CreateNewUser(firstname, lastname, username, password);
                     if (success)
                     {
-                        PrintStringColored("User was successfully created", ConsoleColor.Green);
-                        MySqlCommands.CreateUserTable(userName);
+                        PrintStringColored("\nUser was successfully created", ConsoleColor.Green);
+                        MySqlCommands.CreateUserTable(username);
                     }
                     else
                     {
-                        PrintStringColored("Failed to create user", ConsoleColor.Red);
+                        PrintStringColored("\nFailed to create user", ConsoleColor.Red);
                     }
                 }
-                Console.ReadLine();
+                Console.ReadKey();
             } while (!success);
         }
 
@@ -84,9 +79,10 @@ namespace RecommenderSystem
             {
                 return true;
             }
+
             PrintStringColored("Input should be atleast 3 characters", ConsoleColor.Red);
             Console.WriteLine("\nPress any key to try again");
-            //Console.ReadKey();
+
             return false;
         }
     }
