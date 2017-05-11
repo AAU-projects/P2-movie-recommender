@@ -21,6 +21,8 @@ namespace RecommenderSystem
             Preferences.Add("genre", new Dictionary<string, double[]>());
             Preferences.Add("actors", new Dictionary<string, double[]>());
             Preferences.Add("directors", new Dictionary<string, double[]>());
+            Movies.LoadAllMovies();
+
         }
 
         public static void UpdateUser()

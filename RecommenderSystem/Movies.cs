@@ -8,7 +8,17 @@ namespace RecommenderSystem
 {
     static class Movies
     {
-        public static List<MovieMenuItem> AllMovies { get; } = MySqlCommands.GetMovies();
+        private static List<MovieMenuItem> _allMovies;
+
+        public static void LoadAllMovies()
+        {
+            _allMovies = MySqlCommands.GetMovies();
+        }
+
+        public static List<MovieMenuItem> AllMovies
+        {
+            get => _allMovies;
+        }
 
         public static MovieMenuItem GetMovieByID(int id)
         {
