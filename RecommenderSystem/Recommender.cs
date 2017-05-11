@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +28,11 @@ namespace RecommenderSystem
         {
             Dictionary<MovieMenuItem, double> localmovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
             MovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
-
+            List<MovieMenuItem> allMovies = MySqlCommands.GetMovies();
+            
             Console.Clear();
             Console.WriteLine("Caculating...");
             Update("genre", "directors", "actors");
-            List<MovieMenuItem> allMovies = MySqlCommands.GetMovies();
 
             foreach (var movie in allMovies)
             {
@@ -74,7 +75,7 @@ namespace RecommenderSystem
                             movieWeight += User.Preferences["actors"][actor][(int)UserRating.Weight];
                         }
                     }
-
+                    movie.Title += $" | {movieWeight:0.00}";
                     localmovieRatingsWeight.Add(movie, movieWeight);
                 }
             }

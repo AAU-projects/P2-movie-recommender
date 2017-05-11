@@ -76,9 +76,11 @@ namespace RecommenderSystem
                     Running = false;
                     break;
                 case ConsoleKey.UpArrow:
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                     MoveUp();
                     break;
                 case ConsoleKey.DownArrow:
+                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                     MoveDown();
                     break;
                 case ConsoleKey.Enter:
