@@ -13,7 +13,7 @@ namespace RecommenderSystem
             AddMenuItem(
                 new RecommendedMovies("Your recommdantions"),
                 new MovieMenu("View all movies"),
-                new MovieMenu("Rate movies"),
+                new MovieMenu("Rate movies", false),
                 new ShowRatedMovies("Your rated movies"),
                 new TopGenre("Top Genres"),
                 new TopActors("Top Actors"),
