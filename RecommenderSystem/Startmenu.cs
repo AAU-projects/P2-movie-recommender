@@ -14,10 +14,17 @@ namespace RecommenderSystem
                 new RecommendedMovies("Your recommendations"),
                 new MovieMenu("View all movies"),
                 new MovieMenu("Rate movies", false),
-                new ShowRatedMovies("Your rated movies"),
+                new ShowRatedMovies("Your rated movies"));
+
+            if (User.DebugState)
+            {
+                AddMenuItem(
                 new TopGenre("Top Genres"),
                 new TopActors("Top Actors"),
                 new TopDirector("Top Directors"));
+
+                Recommender.Update("genre", "directors", "actors");
+            }
         }
     }
 }
