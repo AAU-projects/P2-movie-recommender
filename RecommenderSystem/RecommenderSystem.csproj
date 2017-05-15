@@ -103,7 +103,6 @@
     <Compile Include="Recommender.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="ShowRatedMovies.cs" />
-    <Compile Include="SQLiteCommads.cs" />
     <Compile Include="Startmenu.cs" />
     <Compile Include="TopActors.cs" />
     <Compile Include="TopDirector.cs" />

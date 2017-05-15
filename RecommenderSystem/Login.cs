@@ -17,12 +17,13 @@ namespace RecommenderSystem
             Console.Clear();
 
             Console.Write("Username: ");
-            string userName = Console.ReadLine();
+            string[] username = Console.ReadLine().Split(' ');
 
             Console.Write("Password: ");
             string password = Console.ReadLine();
 
-            bool success = MySqlCommands.FindUser(userName, password);
+            bool success = MySqlCommands.FindUser(username[0], password);
+            bool debug = checkForDebug(username);
 
             if (success)
             {
@@ -30,7 +31,7 @@ namespace RecommenderSystem
                 Console.WriteLine("Press any key to continue");
                 Console.ReadKey();
 
-                new User(userName);
+                new User(username[0], debug);
 
                 if (User.NumberOfMoviesRated < 10)
                 {
@@ -48,6 +49,18 @@ namespace RecommenderSystem
                 PrintStringColored("\nWrong password or username", ConsoleColor.Red);
                 Console.ReadKey();
             }
+        }
+
+        private bool checkForDebug(string[] username)
+        {
+            if (username.Length > 1)
+            {
+                if (username[1] == "-d")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
