@@ -8,28 +8,29 @@ namespace RecommenderSystem
 {
     class ShowRatedMovies : Menu
     {
-        private int lastNumberOfRatedMovies = 0;
+        private int _lastNumberOfRatedMovies;
+
         public ShowRatedMovies(string title) : base(title)
         {
         }
 
         public override void Select()
         {
-            
-            if (lastNumberOfRatedMovies != User.NumberOfMoviesRated)
+            if (_lastNumberOfRatedMovies != User.NumberOfMoviesRated)
             {
-                _menuItems.Clear();
+                MenuItems.Clear();
                 List<int> movieIDs = MySqlCommands.GetUserRatedMovies();
-                List<MovieMenuItem> moviesRated = MySqlCommands.FindMovieFromID(movieIDs);
+                List<MovieMenuItem> moviesRated = MySqlCommands.FindMovieFromId(movieIDs);
+
                 foreach (var movie in moviesRated)
                 {
                     AddMenuItem(movie);
                 }
             }
             
-
-            lastNumberOfRatedMovies = User.NumberOfMoviesRated;
+            _lastNumberOfRatedMovies = User.NumberOfMoviesRated;
             Console.Clear();
+
             base.Select();
         }
     }
