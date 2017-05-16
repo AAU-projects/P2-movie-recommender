@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -154,7 +155,7 @@ namespace RecommenderSystem
                         }
 
                         movieList.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
-                        Convert.ToDouble(row[2]), Convert.ToInt32(row[5]), row[3].ToString(), row[6].ToString(), row[7].ToString(), actors));
+                        Convert.ToDouble(row[2], new CultureInfo("us-US")), Convert.ToInt32(row[5]), row[3].ToString(), row[6].ToString(), row[7].ToString(), actors));
                     }
                 }
                 catch (Exception ex)
