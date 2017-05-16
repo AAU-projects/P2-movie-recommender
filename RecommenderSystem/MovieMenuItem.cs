@@ -73,7 +73,7 @@ namespace RecommenderSystem
                     PrintStringColored("thumbs up", ConsoleColor.Green);
                 else if (UserRating == "thumbsdown")
                     PrintStringColored("thumbs down", ConsoleColor.Red);
-                Console.WriteLine($"\nothers have rated this movie {_rating } on IMDB");
+                Console.WriteLine($"\nIMDb rating: {_rating}\n");
             }
             else
             {
@@ -87,25 +87,24 @@ namespace RecommenderSystem
             string[] genres = Genre.Replace(" ", "").Split(',');
             foreach (var genre in genres)
             {
-                try
+                if (User.Preferences["genre"].ContainsKey(genre))
                 {
                     Console.Write($"{genre}({User.Preferences["genre"][genre][2]:N4}), ");
                 }
-                catch (Exception e)
+                else
                 {
                     Console.Write($"{genre}(0), ");
-                }
-                
+                }    
             }      
             Console.WriteLine($"\n");
             Console.WriteLine($"Duration: {_duration} min");
             Console.WriteLine($"{_resume}");
 
-            try
+            if (User.Preferences["directors"].ContainsKey(Director))
             {
                 Console.WriteLine($"Director: {Director}({User.Preferences["directors"][Director][2]:N4})");
             }
-            catch (Exception e)
+            else
             {
                 Console.WriteLine($"Director: {Director}(0)");
             }
@@ -114,11 +113,11 @@ namespace RecommenderSystem
 
             foreach (var actor in Actors)
             {
-                try
+                if ((User.Preferences["actors"].ContainsKey(actor)))
                 {
                     Console.WriteLine($"{actor}({User.Preferences["actors"][actor][2]:N4})");
                 }
-                catch (Exception e)
+                else
                 {
                     Console.WriteLine($"{actor}(0)");
                 }
