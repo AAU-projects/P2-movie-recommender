@@ -24,12 +24,12 @@ namespace RecommenderSystem
             FindType(items);
         }
 
-        public static List<MovieMenuItem> GetRecommendedMovies()
+        public static void GetRecommendedMovies()
         {
             Dictionary<MovieMenuItem, double> localmovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
             MovieRatingsWeight = new Dictionary<MovieMenuItem, double>();
             List<MovieMenuItem> allMovies = MySqlCommands.GetMovies();
-            
+
             Console.Clear();
             Console.WriteLine("Caculating...");
             Update("genre", "directors", "actors");
@@ -82,8 +82,6 @@ namespace RecommenderSystem
 
             MovieRatingsWeight = localmovieRatingsWeight.OrderByDescending(m => m.Value);
             Console.Clear();
-
-            return allMovies;
         }
 
 

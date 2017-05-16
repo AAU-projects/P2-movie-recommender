@@ -9,7 +9,7 @@ namespace RecommenderSystem
     class MovieMenu : Menu
     {
         private bool _firstRun = true;
-        private bool _showRated;
+        private readonly bool _showRated;
 
         public MovieMenu(string title) : this(title, true)
         { }

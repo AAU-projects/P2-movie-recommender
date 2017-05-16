@@ -34,9 +34,25 @@ namespace RecommenderSystem
         public override void Select()
         {
             UserRating = MySqlCommands.FindRatingFromMovieId(MovieId);
-
             Console.Clear();
 
+            if (User.DebugState)
+            {
+                printDebugMovieDetails(UserRating);
+            }
+            else
+            {
+                printMovieDetails(UserRating);
+            }
+
+            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", MovieId);
+            User.UpdateUser();
+
+            rateMenu.Start();
+        }
+
+        private void printMovieDetails(string UserRating)
+        {
             Console.WriteLine($"{Title}   {_releaseDate}");
             Console.WriteLine($"{Genre}");
             Console.WriteLine($"");
@@ -49,7 +65,7 @@ namespace RecommenderSystem
             {
                 Console.WriteLine(actor);
             }
-                        
+
             if (UserRating != "notRated")
             {
                 PrintStringColoredInLine($"\nYou have rated this movie: ", ConsoleColor.Magenta);
@@ -63,11 +79,65 @@ namespace RecommenderSystem
             {
                 Console.WriteLine(); // new line for style
             }
-            
-            RateMovieMenu rateMenu = new RateMovieMenu("Rate this movie", MovieId);
-            User.UpdateUser();
-
-            rateMenu.Start();
         }
+
+        private void printDebugMovieDetails(string UserRating)
+        {
+            Console.WriteLine($"{Title}   {_releaseDate}");
+            string[] genres = Genre.Replace(" ", "").Split(',');
+            foreach (var genre in genres)
+            {
+                try
+                {
+                    Console.Write($"{genre}({User.Preferences["genre"][genre][2]:N4}), ");
+                }
+                catch (Exception e)
+                {
+                    Console.Write($"{genre}(0), ");
+                }
+                
+            }      
+            Console.WriteLine($"\n");
+            Console.WriteLine($"Duration: {_duration} min");
+            Console.WriteLine($"{_resume}");
+
+            try
+            {
+                Console.WriteLine($"Director: {Director}({User.Preferences["directors"][Director][2]:N4})");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Director: {Director}(0)");
+            }
+
+            Console.WriteLine("\nLeading actors");
+
+            foreach (var actor in Actors)
+            {
+                try
+                {
+                    Console.WriteLine($"{actor}({User.Preferences["actors"][actor][2]:N4})");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{actor}(0)");
+                }
+            }
+
+            if (UserRating != "notRated")
+            {
+                PrintStringColoredInLine($"\nYou have rated this movie: ", ConsoleColor.Magenta);
+                if (UserRating == "thumbsup")
+                    PrintStringColored("thumbs up", ConsoleColor.Green);
+                else if (UserRating == "thumbsdown")
+                    PrintStringColored("thumbs down", ConsoleColor.Red);
+                Console.WriteLine($"\nothers have rated this movie {_rating } on IMDB");
+            }
+            else
+            {
+                Console.WriteLine(); // new line for style
+            }
+        }
+
     }
 }
