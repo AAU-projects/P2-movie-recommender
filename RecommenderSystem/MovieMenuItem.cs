@@ -73,7 +73,7 @@ namespace RecommenderSystem
                     PrintStringColored("thumbs up", ConsoleColor.Green);
                 else if (UserRating == "thumbsdown")
                     PrintStringColored("thumbs down", ConsoleColor.Red);
-                Console.WriteLine($"\nothers have rated this movie {_rating } on IMDB");
+                Console.WriteLine($"\nIMDb rating: {_rating}\n");
             }
             else
             {

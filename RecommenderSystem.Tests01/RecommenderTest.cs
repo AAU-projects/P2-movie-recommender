@@ -16,7 +16,7 @@ namespace RecommenderSystem.Tests
         [TestCase("genre", "Action", ExpectedResult = 0.33)]
         [TestCase("genre", "Drama", ExpectedResult = 0.67)] // 2/3/2*2 = 0,67 
         [TestCase("actors", "Harrison Ford", ExpectedResult = 0.33)]       // 1/3/1/1 = 0,33
-        public double Update_TestUserPreferencesAction(string type, string item)
+        public double Update_TestUserPreferences(string type, string item)
         {
             new User("testuserPreferences");
             MySqlCommands.RateMovie(12, "thumbsup"); // star wars movie
