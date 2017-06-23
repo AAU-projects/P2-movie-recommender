@@ -14,7 +14,8 @@ namespace RecommenderSystem
                 new RecommendedMovies("Your recommendations"),
                 new MovieMenu("View all movies"),
                 new MovieMenu("Rate movies", false),
-                new ShowRatedMovies("Your rated movies"));
+                new ShowRatedMovies("Your rated movies"),
+                new SearchMenu("Search"));
 
             if (User.DebugState)
             {
