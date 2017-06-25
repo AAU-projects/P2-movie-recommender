@@ -19,9 +19,10 @@ namespace RecommenderSystem
 
         public override void Select()
         {
+            Console.Clear();
             MenuItems.Clear();
             Recommender.GetRecommendedMovies();
-
+            Console.Clear();
             foreach (var movie in Recommender.MovieRatingsWeight.Take(10))
             {
                 AddMenuItem(movie.Key);
