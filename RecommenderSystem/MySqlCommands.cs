@@ -362,5 +362,42 @@ namespace RecommenderSystem
                 _connection.Close();
             }
         }
+
+        public static List<MovieMenuItem> SearchForKeyWord(string search)
+        {
+            List<MovieMenuItem> movieList = new List<MovieMenuItem>();
+
+            MySqlCommand cmd = new MySqlCommand();
+
+            cmd.CommandText = $"SELECT * FROM imdbdata WHERE ( Movie LIKE '%{search}%' OR Rating LIKE '%{search}%' OR Genre LIKE '%{search}%' OR `Year` LIKE '%{search}%' OR Runtime LIKE '%{search}%' OR Director LIKE '%{search}%' OR Cast1 LIKE '%{search}%' OR Cast2 LIKE '%{search}%' OR Cast3 LIKE '%{search}%' OR Cast4 LIKE '%{search}%' OR Cast5 LIKE '%{search}%'  OR Cast6 LIKE '%{search}%' OR Cast7 LIKE '%{search}%' OR Cast8 LIKE '%{search}%' OR Cast9 LIKE '%{search}%' OR Cast10 LIKE '%{search}%');";
+            cmd.Connection = _connection;
+
+            DataTable results = SendQuery(cmd);
+
+            try
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    var actors = new List<string>();
+
+                    for (int j = 8; j < 18; j++)
+                    {
+                        if (row[j] != null)
+                        {
+                            actors.Add(row[j].ToString());
+                        }
+                    }
+
+                    movieList.Add(new MovieMenuItem(Convert.ToInt32(row[0]), row[1].ToString(), row[4].ToString(),
+                        Convert.ToDouble(row[2], new CultureInfo("us-US")), Convert.ToInt32(row[5]), row[3].ToString(), row[6].ToString(), row[7].ToString(), actors));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return movieList;
+        }
     }
 }
