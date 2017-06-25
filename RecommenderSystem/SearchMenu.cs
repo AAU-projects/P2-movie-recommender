@@ -21,7 +21,7 @@ namespace RecommenderSystem
             Console.Clear();
             MenuItems.Clear();
 
-            Console.WriteLine("Enter a keyword for a movie (title, genre, year, actor, director etc.");
+            Console.WriteLine("Enter a keyword for a movie (title, genre, year, actor, director etc.)");
             string search = Console.ReadLine();
 
             List<MovieMenuItem> moviesSearch = MySqlCommands.SearchForKeyWord(search);
