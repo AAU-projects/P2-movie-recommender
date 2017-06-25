@@ -15,19 +15,14 @@ namespace RecommenderSystem
             _allMovies = MySqlCommands.GetMovies();
         }
 
-        public static List<MovieMenuItem> AllMovies
-        {
-            get => _allMovies;
-        }
-
         public static MovieMenuItem GetMovieByID(int id)
         {
-            return AllMovies.Find(m => m.MovieId == id);
+            return _allMovies.Find(m => m.MovieId == id);
         }
 
         public static List<MovieMenuItem> GetMoviesByID(List<int> ids)
         {
-            return AllMovies.FindAll(m => ids.Contains(m.MovieId));
+            return _allMovies.FindAll(m => ids.Contains(m.MovieId));
         }
     }
 }
