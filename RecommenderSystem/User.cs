@@ -11,15 +11,29 @@ namespace RecommenderSystem
     {
         public static string Username;
         public static int NumberOfMoviesRated;
-
-        public static Dictionary<String, Dictionary<String, double[]>> preferences = new Dictionary<string, Dictionary<string, double[]>>();
+        public static Dictionary<String, Dictionary<String, double[]>> Preferences = new Dictionary<string, Dictionary<string, double[]>>();
+        public static bool DebugState;
 
         public User(string userName)
         {
-            preferences.Clear();
+            CreateNewUser(userName);
+        }
+
+        public User(string userName, bool debug)
+        {
+            DebugState = debug;
+            CreateNewUser(userName);
+        }
+
+        private void CreateNewUser(string userName)
+        {
+            Preferences.Clear();
+
             Username = userName;
             NumberOfMoviesRated = MySqlCommands.NumberOfRowsInTable($"{Username}_movies");
-            preferences.Add("genre", new Dictionary<string, double[]>());
+            Preferences.Add("genre", new Dictionary<string, double[]>());
+            Preferences.Add("actors", new Dictionary<string, double[]>());
+            Preferences.Add("directors", new Dictionary<string, double[]>());
         }
 
         public static void UpdateUser()

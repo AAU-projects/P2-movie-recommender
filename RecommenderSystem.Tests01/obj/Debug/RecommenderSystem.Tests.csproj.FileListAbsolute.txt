@@ -19,3 +19,19 @@ E:\Github\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
 E:\Github\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
 E:\Github\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
 E:\Github\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.csprojResolveAssemblyReference.cache
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\obj\Debug\RecommenderSystem.Tests.pdb
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll.config
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.Tests.pdb
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\MySql.Data.Entity.EF6.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.dll
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.exe
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\RecommenderSystem.pdb
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.xml
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\MagnusS\Dropbox\Aalborg Universitet - Software\GitHub\SWa322-Program\SWa322-Program\RecommenderSystem.Tests01\bin\Debug\nunit.framework.xml
